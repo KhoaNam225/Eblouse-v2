@@ -4,24 +4,28 @@ const SearchForm = () => {
   return (
     <div className="form">
       <div className="condition">
-        <div class="search-input">
-          <i class="locate-icon fas fa-map-marker-alt"></i>
-          <input type="text" class="city" placeholder="your city" />
+        <div className="search-input">
+          <i className="locate-icon fas fa-map-marker-alt"></i>
+          <input type="text" className="city" placeholder="your city" />
         </div>
-        <div class="search-input">
-          <i class="calender-icon fa fa-calendar"></i>
-          <input type="text" class="date-display" placeholder="Nov 09, 2020" />
-        </div>
-        <div class="search-input">
-          <i class="insurance-icon fa fa-address-card"></i>
+        <div className="search-input">
+          <i className="calender-icon fa fa-calendar"></i>
           <input
             type="text"
-            class="insurance"
+            className="date-display"
+            placeholder="Nov 09, 2020"
+          />
+        </div>
+        <div className="search-input">
+          <i className="insurance-icon fa fa-address-card"></i>
+          <input
+            type="text"
+            className="insurance"
             placeholder="Insurance carrier and plan"
           />
         </div>
-        <button class="search-button">
-          <i class="search-button fa fa-search"></i>
+        <button className="search-button">
+          <i className="search-button fa fa-search"></i>
         </button>
       </div>
     </div>

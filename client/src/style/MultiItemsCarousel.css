@@ -1,0 +1,28 @@
+.carousel-wrapper {
+  padding: 20px;
+}
+
+.BrainhubCarousel .BrainhubCarousel__trackContainer .BrainhubCarousel__track {
+  height: 300px;
+}
+
+.carousel-button {
+  background: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  outline: none;
+  border: 1px solid #393e46;
+  color: #393e46;
+  transition: all 0.2s;
+}
+
+.carousel-button:focus {
+  outline: none;
+}
+
+.carousel-button:hover {
+  border: none;
+  background-color: #f05454;
+  color: white;
+}

@@ -1,0 +1,202 @@
+.nav-wrapper-full {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  min-height: 120px;
+  padding: 0px 10px;
+  transition: all 0.2s;
+  min-height: 130px;
+}
+
+.nav-scrolled {
+  box-shadow: 0px 3px 10px 2px #bbbbbb;
+  transition: all 0.2s;
+}
+
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nav-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 2 1 auto;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-middle > .nav-btn {
+  margin: 0px 10px;
+  padding: 5px 10px;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+/* Styling the search form */
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-form {
+  border-radius: 50px;
+  display: flex;
+  margin: 0;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.search-form > .split-bar {
+  width: 1px;
+  height: 2rem;
+  border: 1px solid #e1e1e1;
+}
+
+.nav-btn {
+  position: relative;
+}
+
+.nav-btn::after {
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  content: "";
+  width: 0;
+  height: 100%;
+  border-bottom: 3px solid #ff4646;
+  transition: all 0.5s;
+}
+
+/* Styling for each search box */
+.search-component {
+  border-radius: 55px;
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  height: 4em;
+}
+
+.search-component > label {
+  font-weight: bold;
+  font-size: 0.8em;
+  margin: 0;
+}
+
+.search-component > input {
+  border: none;
+  outline: none;
+  background: none;
+}
+
+.submit-btn {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: none;
+  background-color: #ff4646;
+  color: white;
+  font-weight: bold;
+}
+
+.submit-btn:focus {
+  outline: none;
+}
+
+.box-with-search-btn {
+  display: flex;
+  padding: 0px 10px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex: 2 1 auto;
+  border-radius: 55px;
+}
+
+.box-with-search-btn > .search-component {
+  border: none;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+/* Animations */
+.search-component,
+.box-with-search-btn {
+  transition: all 0.2s;
+}
+
+.search-component:hover,
+.box-with-search-btn:hover {
+  background-color: #f1f6f9;
+}
+
+.right-shadow-box {
+  box-shadow: 5px 0px 10px #ccccccb7;
+}
+
+.both-side-shadow-box {
+  box-shadow: 0px 0px 10px #ccccccc7;
+}
+
+.left-shadow-box {
+  box-shadow: -5px 0px 10px #ccccccb6;
+}
+
+.nav-btn:hover::after {
+  width: 100%;
+}
+
+/* Button to show full navbar when in partial mode*/
+.show-full-nav-btn {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 10px;
+  justify-content: space-between;
+  border: 1px solid #bbbbbb;
+  margin-top: 10px;
+  border-radius: 50px;
+  transition: all 0.2s linear;
+}
+
+.show-full-nav-btn:hover {
+  box-shadow: 0px 0px 5px 2px #dfdede;
+}
+
+.show-full-nav-btn > p {
+  margin: 0;
+  padding-left: 10px;
+}
+
+.show-full-nav-btn .search-btn-show-full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ff4646;
+  color: white;
+  font-weight: bold;
+}
