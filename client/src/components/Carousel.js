@@ -20,7 +20,7 @@ export const MultiItemsCarousel = ({ items }) => {
   return (
     <div className="carousel-wrapper">
       <Carousel
-        offset={10}
+        offset={30}
         draggable={false}
         plugins={[
           "infinite",

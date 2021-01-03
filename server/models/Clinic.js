@@ -20,6 +20,8 @@ const clinicSchema = Schema({
   ],
   services: [{ type: Schema.Types.ObjectId, required: true, ref: "Service" }],
   doctors: [{ type: Schema.Types.ObjectId, required: true, ref: "Doctor" }],
+  reviewCount: { type: Number, default: 0 },
+  ratingSum: { type: Number, default: 0 },
 });
 
 const Clinic = mongoose.model("Clinic", clinicSchema);

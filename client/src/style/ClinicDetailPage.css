@@ -1,0 +1,99 @@
+section {
+  border-top: 2px solid #dfe0df;
+  padding: 20px 0px;
+}
+
+.showcase-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.showcase-wrapper p,
+.showcase-wrapper h2 {
+  margin: 0;
+}
+
+.showcase-wrapper .clinic-basic-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.showcase-wrapper .clinic-basic-info .name-address {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.showcase-wrapper .clinic-basic-info .name-address p {
+  padding: 0px 20px;
+  font-size: 0.8em;
+  font-style: italic;
+  color: gray;
+}
+
+.showcase-wrapper .clinic-basic-info .name-address h2 {
+  padding: 0px 10px;
+}
+
+.showcase-wrapper .clinic-basic-info .name-address .divider {
+  background-color: gray;
+  width: 2px;
+  height: 1.5em;
+  align-self: baseline;
+}
+
+.showcase-wrapper .clinic-basic-info .rating-specialization {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 10px;
+  align-items: center;
+}
+
+.showcase-wrapper .clinic-basic-info .rating-specialization .specialization {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.showcase-wrapper .clinic-basic-info .rating-specialization .specialization li {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+.showcase-wrapper .clinic-basic-info .rating-specialization .rating {
+  font-size: 0.8em;
+}
+
+.showcase-wrapper .clinic-images {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.showcase-wrapper .clinic-images .main-image {
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.showcase-wrapper .clinic-images .image-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.showcase-wrapper .clinic-images .image-grid .showcase-image-wrapper {
+  width: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.clinic-images img {
+  width: 100%;
+}

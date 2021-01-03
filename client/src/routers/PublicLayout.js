@@ -12,26 +12,33 @@ import PrivateRoute from "./PrivateRoute";
 import SearchListPage from "../pages/SearchListPage";
 
 import "../style/main.css";
+import { Container } from "react-bootstrap";
 
 const PublicLayout = () => {
   return (
     <>
       <PublicNavBar />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exac path="/info" component={InformationPage} />
-        <Route exac path="/clinic/:id" component={ClinicDetailPage} />
-        <Route exac path="/search" component={SearchListPage} />
+      <Container style={{ padding: 0 }} fluid>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exac path="/info" component={InformationPage} />
+          <Route exac path="/clinic/:id" component={ClinicDetailPage} />
+          <Route exac path="/search" component={SearchListPage} />
 
-        <PrivateRoute exac path="/booking/:id" component={BookingDetailPage} />
-        <PrivateRoute
-          exac
-          path="/booking/confirm/:id"
-          component={BookingConfirm}
-        />
-        <Route exac component={NotFoundPage} />
-      </Switch>
+          <PrivateRoute
+            exac
+            path="/booking/:id"
+            component={BookingDetailPage}
+          />
+          <PrivateRoute
+            exac
+            path="/booking/confirm/:id"
+            component={BookingConfirm}
+          />
+          <Route exac component={NotFoundPage} />
+        </Switch>
+      </Container>
     </>
   );
 };

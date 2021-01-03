@@ -6,9 +6,14 @@ const getClinic = (clinicId) => async (dispatch) => {
   dispatch({ type: types.GET_CLINIC_REQUEST, payload: null });
   try {
     const clinic = {};
-    clinic.name = "Hoa Hao Clinic";
-    clinic.specialist = "Eye, nose & throat clinic";
-    clinic.address = "232 3/2 Street, ward 9, district 9, HCMC";
+    clinic.name = faker.company.companyName();
+    clinic.specialization = [
+      "Eye, Nose & Throat",
+      "Cardiologist",
+      "Dentist",
+      "Dermatology",
+    ];
+    clinic.address = `${faker.address.streetAddress()} ${faker.address.streetName()}, ${faker.address.city()}`;
     clinic.rating = 4.75;
     clinic.reviewNum = 64;
     clinic.images = [];
@@ -17,7 +22,7 @@ const getClinic = (clinicId) => async (dispatch) => {
       clinic.images.push(faker.image.business());
     }
 
-    clinic.description = faker.lorem.paragraph();
+    clinic.statement = faker.lorem.paragraph();
     clinic.services = ["Medical test", "Endoscopy"];
 
     clinic.doctors = [];
@@ -30,7 +35,7 @@ const getClinic = (clinicId) => async (dispatch) => {
       doctor.morning = ["Tuesday, Friday"];
       doctor.afternoon = [];
       doctor.evening = ["Monday", "Wednesday"];
-      doctor.pronoun = "Ths.Bs.";
+      doctor.qualification = "Ths.Bs.";
 
       clinic.doctors.push(doctor);
     }
@@ -44,6 +49,7 @@ const getClinic = (clinicId) => async (dispatch) => {
       };
       review.date = faker.date.past();
       review.content = faker.lorem.sentence();
+      review.rating = Math.floor(Math.random() * 5) + 1;
 
       clinic.reviews.push(review);
     }

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { MultiItemsCarousel } from "../components/Carousel";
 import reviewsActions from "../redux/actions/reviews.actions";
 import "../style/HomePage.css";
@@ -42,7 +42,7 @@ const HomePage = () => {
       </section>
       <section className="reviews-carousel">
         {isLoading ? (
-          <Spinner animation="border" variant="danger" />
+          <LoadingSpinner animation="border" color="danger" />
         ) : (
           <MultiItemsCarousel items={getReviewCardsList()} />
         )}
