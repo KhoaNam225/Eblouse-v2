@@ -24,7 +24,7 @@ const PublicLayout = () => {
           <Route exact path="/login" component={LoginPage} />
           <Route exac path="/info" component={InformationPage} />
           <Route exac path="/clinic/:id" component={ClinicDetailPage} />
-          <Route exac path="/search" component={SearchListPage} />
+          {/* <Route exac path="/search" component={SearchListPage} /> */}
 
           <PrivateRoute
             exac

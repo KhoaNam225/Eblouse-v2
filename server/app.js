@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 const MONGODB_URI = process.env.MONGODB_URI;
 const { AppError, sendResponse } = require("./helpers/utils.helper");
 
+var indexRouter = require("./routes/index");
+
 var app = express();
 
 app.use(logger("dev"));
@@ -27,9 +29,11 @@ mongoose
   })
   .then(() => {
     console.log(`Mongoose connected to ${MONGODB_URI}`);
-    require("./models/testSchema");
+    require("./testing/testSchema");
   })
-  .catch((error) => console.log(error));
+  .catch((err) => console.log(err));
+
+app.use("/api", indexRouter);
 
 // catch 404 and forard to error handler
 app.use((req, res, next) => {

@@ -27,7 +27,7 @@ const HomePage = () => {
         rating={review.rating}
         key={review.clinicName}
         onClick={() => {
-          history.push("/clinic/25111997");
+          history.push("/clinic/5ff8190e5755f18df89c80e8");
         }}
       />
     ));
@@ -44,7 +44,11 @@ const HomePage = () => {
         {isLoading ? (
           <LoadingSpinner animation="border" color="danger" />
         ) : (
-          <MultiItemsCarousel items={getReviewCardsList()} />
+          <MultiItemsCarousel
+            items={getReviewCardsList()}
+            offset={30}
+            slidesNum={3}
+          />
         )}
       </section>
     </div>
@@ -66,7 +70,7 @@ const ReviewCard = ({
     alignItems: "center",
   };
   return (
-    <div class="home-page-review-card" onClick={onClick}>
+    <div className="home-page-review-card" onClick={onClick}>
       <div style={infoStyle}>
         <div>
           <img
