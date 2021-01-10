@@ -11,3 +11,26 @@
 .wrapper {
   padding: 20px 20px;
 }
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box .login-btn {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  color: white;
+}
+
+.login-box .login-btn:hover {
+  opacity: 0.8;
+}

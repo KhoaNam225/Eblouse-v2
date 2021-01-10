@@ -1,3 +1,4 @@
+import { Modal } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import logo from "../images/ebloue-logo.png";
@@ -13,10 +14,19 @@ const PublicNavBar = () => {
   const [searchMode, setSearchMode] = useState(BOOKING_SEARCH_MODE);
   const [showFullClicked, setshowFullClicked] = useState(false);
   const [scrollOffsetY, setScrollOffsetY] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollOffsetY(position);
+  };
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleHideModal = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -62,7 +72,7 @@ const PublicNavBar = () => {
           </div>
           <div className="nav-links">
             <Nav.Link href="/">Home Page</Nav.Link>
-            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
           </div>
         </div>
         {searchMode === BOOKING_SEARCH_MODE ? (
@@ -96,7 +106,7 @@ const PublicNavBar = () => {
           </div>
           <div className="nav-links">
             <Nav.Link href="/">Home Page</Nav.Link>
-            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
           </div>
         </div>
       </>
@@ -114,6 +124,35 @@ const PublicNavBar = () => {
       ) : (
         <FullNavBar />
       )}
+
+      <Modal show={showModal} onHide={handleHideModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="login-box">
+            <button
+              className="login-btn"
+              style={{
+                backgroundColor: "#ef4f4f",
+              }}
+            >
+              <i className="fab fa-google" style={{ marginRight: "1em" }}></i>
+              Continue with Google
+            </button>
+            <button
+              className="login-btn"
+              style={{ backgroundColor: "#4267B2" }}
+            >
+              <i
+                className="fab fa-facebook-square"
+                style={{ marginRight: "1em" }}
+              ></i>
+              Continue with Facebook
+            </button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
