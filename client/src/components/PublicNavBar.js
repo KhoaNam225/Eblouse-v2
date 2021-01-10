@@ -1,6 +1,7 @@
-import { Modal, Button, Form, Col } from "react-bootstrap";
+import { Modal, Button, Form, Col, Nav } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import { Nav } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import usersActions from "../redux/actions/users.actions";
 import logo from "../images/ebloue-logo.png";
 import "../style/PublicNavBar.css";
 
@@ -18,6 +19,10 @@ const PublicNavBar = () => {
   const [showUserDetailInputModal, setShowUserDetailInputModal] = useState(
     false
   );
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.user);
+  const isLoading = useSelector((state) => state.users.isLoading);
 
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -43,6 +48,12 @@ const PublicNavBar = () => {
   const hanelModalsTransition = () => {
     setShowModal(false);
     setShowUserDetailInputModal(true);
+  };
+
+  const handleUserLogin = () => {
+    dispatch(usersActions.userLogin());
+    setShowModal(false);
+    setShowUserDetailInputModal(false);
   };
 
   useEffect(() => {
@@ -88,7 +99,13 @@ const PublicNavBar = () => {
           </div>
           <div className="nav-links">
             <Nav.Link href="/">Home Page</Nav.Link>
-            <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
+            {isLoading ? (
+              <Nav.Link>Loading</Nav.Link>
+            ) : user == null ? (
+              <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
+            ) : (
+              <Nav.Link>{user.firstName}</Nav.Link>
+            )}
           </div>
         </div>
         {searchMode === BOOKING_SEARCH_MODE ? (
@@ -157,11 +174,13 @@ const PublicNavBar = () => {
               style={{
                 backgroundColor: "#ef4f4f",
               }}
+              onClick={() => handleUserLogin()}
             >
               <i className="fab fa-google" style={{ marginRight: "1em" }}></i>
               Login with Google
             </button>
             <button
+              onClick={() => handleUserLogin()}
               className="login-btn"
               style={{ backgroundColor: "#4267B2" }}
             >
