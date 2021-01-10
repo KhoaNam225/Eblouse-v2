@@ -1,4 +1,4 @@
-import { Modal } from "react-bootstrap";
+import { Modal, Button, Form, Col } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import logo from "../images/ebloue-logo.png";
@@ -15,6 +15,9 @@ const PublicNavBar = () => {
   const [showFullClicked, setshowFullClicked] = useState(false);
   const [scrollOffsetY, setScrollOffsetY] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [showUserDetailInputModal, setShowUserDetailInputModal] = useState(
+    false
+  );
 
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -27,6 +30,19 @@ const PublicNavBar = () => {
 
   const handleHideModal = () => {
     setShowModal(false);
+  };
+
+  const showUserDetailModal = () => {
+    setShowUserDetailInputModal(true);
+  };
+
+  const hideUserDetailModal = () => {
+    setShowUserDetailInputModal(false);
+  };
+
+  const hanelModalsTransition = () => {
+    setShowModal(false);
+    setShowUserDetailInputModal(true);
   };
 
   useEffect(() => {
@@ -130,7 +146,12 @@ const PublicNavBar = () => {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="login-box">
+          <div className="login-signup-divider">
+            <div className="left"></div>
+            <p className="text">Login</p>
+            <div className="right"></div>
+          </div>
+          <div className="login-signup-box">
             <button
               className="login-btn"
               style={{
@@ -138,7 +159,7 @@ const PublicNavBar = () => {
               }}
             >
               <i className="fab fa-google" style={{ marginRight: "1em" }}></i>
-              Continue with Google
+              Login with Google
             </button>
             <button
               className="login-btn"
@@ -148,10 +169,115 @@ const PublicNavBar = () => {
                 className="fab fa-facebook-square"
                 style={{ marginRight: "1em" }}
               ></i>
-              Continue with Facebook
+              Login with Facebook
+            </button>
+          </div>
+          <div className="login-signup-divider" style={{ marginTop: 20 }}>
+            <div className="left"></div>
+            <p className="text">Signup</p>
+            <div className="right"></div>
+          </div>
+          <div className="login-signup-box">
+            <button
+              className="signup-btn"
+              onClick={() => hanelModalsTransition()}
+            >
+              <i className="fab fa-google" style={{ marginRight: "1em" }}></i>
+              Signup with Google
+            </button>
+            <button
+              className="signup-btn"
+              onClick={() => hanelModalsTransition()}
+            >
+              <i
+                className="fab fa-facebook-square"
+                style={{ marginRight: "1em" }}
+              ></i>
+              Signup with Facebook
             </button>
           </div>
         </Modal.Body>
+      </Modal>
+
+      <Modal show={showUserDetailInputModal} onHide={hideUserDetailModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Your Information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>
+                <strong>Full name</strong>{" "}
+                <span
+                  style={{
+                    fontSize: "0.8em",
+                    color: "grey",
+                  }}
+                >
+                  (As written on your ID Card)
+                </span>
+              </Form.Label>
+              <Form.Control type="text" placeholder="Enter your name here..." />
+            </Form.Group>
+            <Form.Row>
+              <Col>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Gender</strong>
+                  </Form.Label>
+                  <Form.Control as="select">
+                    <option>Male</option>
+                    <option>Femail</option>
+                    <option>Other</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Blood type</strong>
+                  </Form.Label>
+                  <Form.Control as="select">
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            </Form.Row>
+            <Form.Group>
+              <Form.Label>
+                <strong>Profile image</strong>
+              </Form.Label>
+              <Form.File />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>
+                <strong>ID/Passport number:</strong>
+              </Form.Label>
+              <Form.Control type="text" placeholder="ID/Passport number..." />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>
+                <strong>Job</strong>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="e.g. Student, Engineer,..."
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={hideUserDetailModal}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );
