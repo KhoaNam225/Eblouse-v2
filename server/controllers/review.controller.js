@@ -34,12 +34,29 @@ reviewController.createNewReview = catchAsync(async (req, res, next) => {
   );
 });
 
+reviewController.getReviewsOfClinic = catchAsync(async (req, res, next) => {
+  const clinicId = req.params.id;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const clinic = await Clinic.findById(clinicId);
+  if (!clinic)
+    return next(new AppError(404, "clinic not found", "get reviews Error"));
+  const totalReviews = await Review.countDocuments({ clinic: clinicId });
+  const totalPages = Math.ceil(totalReviews / limit);
+  const offset = limit * (page - 1);
+  const reviews = await Review.find({ clinic: clinicId })
+    .sort({ createdAt: -1 })
+    .skip(offset)
+    .limit(limit);
+  return sendResponse(res, 200, true, { reviews, totalPages }, null, "");
+});
+
 reviewController.updateSingleReview = catchAsync(async (req, res, next) => {
   const userId = req.userId;
   const reviewId = req.params.id;
   const { content } = req.body;
   const review = await Review.findOneAndUpdate(
-    { _id: reviewId, user: userId },
+    { _id: reviewId },
     { content },
     { new: true }
   );
@@ -57,9 +74,8 @@ reviewController.updateSingleReview = catchAsync(async (req, res, next) => {
 reviewController.deleteSingleReview = catchAsync(async (req, res, next) => {
   const userId = req.userId;
   const reviewId = req.params.id;
-  const review = await Review.findByIdAndDelete({
+  const review = await Review.findOneAndDelete({
     _id: reviewId,
-    user: userId,
   });
   if (!review)
     return next(

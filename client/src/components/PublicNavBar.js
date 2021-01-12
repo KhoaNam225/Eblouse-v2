@@ -1,9 +1,15 @@
 import { Modal, Button, Form, Col, Nav } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
+import FacebookLogin from "react-facebook-login";
+import { GoogleLogin } from "react-google-login";
 import { useSelector, useDispatch } from "react-redux";
+import authActions from "../redux/actions/auth.actions";
 import usersActions from "../redux/actions/users.actions";
 import logo from "../images/ebloue-logo.png";
 import "../style/PublicNavBar.css";
+
+const FB_APP_ID = process.env.REACT_APP_FB_APP_ID;
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const PublicNavBar = () => {
   const BOOKING_SEARCH_MODE = 1;
@@ -21,8 +27,9 @@ const PublicNavBar = () => {
   );
 
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.user);
-  const isLoading = useSelector((state) => state.users.isLoading);
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoading = useSelector((state) => state.auth.loading);
 
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -54,6 +61,18 @@ const PublicNavBar = () => {
     dispatch(usersActions.userLogin());
     setShowModal(false);
     setShowUserDetailInputModal(false);
+  };
+
+  const loginWithFacebook = (response) => {
+    dispatch(authActions.loginFacebook(response.accessToken));
+    setShowModal(false);
+    setShowUserDetailInputModal(false);
+  };
+  const loginWithGoogle = (response) => {
+    dispatch(authActions.loginGoogle(response.accessToken));
+    setShowModal(false);
+    setShowUserDetailInputModal(false);
+    // if (isAuthenticated) return <Redirect to="/" />;
   };
 
   useEffect(() => {
@@ -104,7 +123,7 @@ const PublicNavBar = () => {
             ) : user == null ? (
               <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
             ) : (
-              <Nav.Link>{user.firstName}</Nav.Link>
+              <Nav.Link>{user.name}</Nav.Link>
             )}
           </div>
         </div>
@@ -139,7 +158,13 @@ const PublicNavBar = () => {
           </div>
           <div className="nav-links">
             <Nav.Link href="/">Home Page</Nav.Link>
-            <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
+            {isLoading ? (
+              <Nav.Link>Loading</Nav.Link>
+            ) : user == null ? (
+              <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
+            ) : (
+              <Nav.Link>{user.name}</Nav.Link>
+            )}
           </div>
         </div>
       </>
@@ -169,7 +194,7 @@ const PublicNavBar = () => {
             <div className="right"></div>
           </div>
           <div className="login-signup-box">
-            <button
+            {/* <button
               className="login-btn"
               style={{
                 backgroundColor: "#ef4f4f",
@@ -189,7 +214,39 @@ const PublicNavBar = () => {
                 style={{ marginRight: "1em" }}
               ></i>
               Login with Facebook
-            </button>
+            </button> */}
+            <GoogleLogin
+              className="google-btn d-flex justify-content-center"
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Login with Google"
+              onSuccess={loginWithGoogle}
+              onFailure={(err) => console.log("GOOGLE LOGIN ERROR", err)}
+              cookiePolicy="single_host_origin"
+            />
+            <FacebookLogin
+              appId={FB_APP_ID}
+              fields="name,email,picture"
+              callback={loginWithFacebook}
+              icon="fa-facebook"
+              onFailure={(err) => console.log("FB LOGIN ERROR", err)}
+              containerStyle={{
+                textAlign: "center",
+                backgroundColor: "#3b5998",
+                borderColor: "#3b5998",
+                flex: 1,
+                display: "flex",
+                color: "#fff",
+                cursor: "pointer",
+                marginBottom: "3px",
+              }}
+              buttonStyle={{
+                flex: 1,
+                textTransform: "none",
+                padding: "12px",
+                background: "none",
+                border: "none",
+              }}
+            />
           </div>
           <div className="login-signup-divider" style={{ marginTop: 20 }}>
             <div className="left"></div>

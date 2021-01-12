@@ -47,9 +47,17 @@ reviewSchema.post("save", async function () {
   await this.constructor.calculateReviews(this.clinic);
   await this.constructor.calculateAvgRating(this.clinic);
 });
-//  before request for calculate reiew, it needs to go through middlewares like belows
+// //  before request for calculate reiew, it needs to go through middlewares like belows
+
 reviewSchema.pre(/^findOneAnd/, async function (next) {
-  await this.doc.constructor.calculateReviews(this.doc.blog);
+  this.doc = await this.findOne();
+  next();
+});
+// after pre, it needs to post to update again in database
+
+reviewSchema.post(/^findOneAnd/, async function (next) {
+  if (this.doc) await this.doc.constructor.calculateReviews(this.doc.clinic);
+  // await this.constructor.calculateAvgRating(this.clinic);
 });
 
 const Review = mongoose.model("Review", reviewSchema);

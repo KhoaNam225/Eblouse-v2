@@ -9,6 +9,7 @@ const Doctor = require("../models/Doctor");
 const Booking = require("../models/Booking");
 const userController = require("./user.controller");
 const User = require("../models/User");
+const { findById } = require("../models/Clinic");
 
 const clinicController = {};
 
@@ -73,12 +74,10 @@ clinicController.getListOfClinic = catchAsync(async (req, res, next) => {
 
 //  Clinic can see the booking request
 clinicController.acceptBookingRequest = catchAsync(async (req, res, next) => {
-  const clinicId = req.clinicId; //To
-  const fromUserId = req.params.id; //From
+  const bookingId = req.params.id; //From
   let bookingRelate = await Booking.findOne({
-    from: fromUserId,
-    to: clinicId,
-    status: "requesting",
+    _id: bookingId,
+    status: "Pending",
   });
   if (!bookingRelate) {
     return next(
@@ -89,47 +88,46 @@ clinicController.acceptBookingRequest = catchAsync(async (req, res, next) => {
       )
     );
   }
-  bookingRelate.status = "done";
+  bookingRelate.status = "Active";
   await bookingRelate.save();
   return sendResponse(res, 200, true, null, null, "Booking has been accepted");
 });
 clinicController.cancelBookingRequest = catchAsync(async (req, res, next) => {
-  const clinicId = req.clinicId; //To
-  const fromUserId = req.params.id; //From
+  const bookingId = req.params.id; //From
   let bookingRelate = await Booking.findOne({
-    from: fromUserId,
-    to: clinicId,
-    status: "requesting",
+    _id: bookingId,
+    status: "Pending",
   });
   if (!bookingRelate) {
     return next(
       new AppError(
         404,
         "Booking request not found",
-        "accept Booking request Error"
+        "cancel Booking request Error"
       )
     );
   }
-  bookingRelate.status = "cancelled";
+  bookingRelate.status = "Cancelled";
   await bookingRelate.save();
   return sendResponse(res, 200, true, null, null, "Booking has been cancelled");
 });
 
 //  Clinic can see the list of booking
 clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
-  let { page, litmit, sortBy, ...filter } = { ...req.body };
-  const userId = req.userId;
+  let { page, limit, sortBy, ...filter } = { ...req.query };
+  const currentUser = req.userId;
+  clinicId = await Booking.findById({ clinic: clinic._id });
   page = parseInt(page) || 1;
   limit = parseInt(limit) || 10;
 
   let bookingRelate = await Booking.find({
     from: userId,
-    status: "active",
+    status: "Pending",
   });
-  const clinicIDs = bookingList.map((bookingRelate) => {
-    if (bookingRelate.from._id.equals(userId)) return bookingRelate.to;
+  const clinicIDs = bookingRelate.map((bookingRelate) => {
     return bookingRelate.from;
   });
+
   const totalBooking = await User.countDocuments({
     ...filter,
     isDeletedFalse: false,
@@ -137,6 +135,7 @@ clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
   });
   const totalPages = Math.ceil(totalBooking / limit);
   const offset = limit * (page - 1);
+
   let clinics = await Clinic.find({ ...filter, _id: { $in: clinicIDs } })
     .sort({ ...sortBy, createAt: -1 })
     .skip(offset)
@@ -152,15 +151,17 @@ clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
     });
     return temp;
   });
-  // const promises = clinics.map(async(clinic) => {
-  //   let temp2 = clinic.toJSON();
-  //   temp2.bookingRelate = bookingList.find((bookingRelate) => {
-  //     if(bookingRelate.to.equals(clinic._id)) {
-  //       return {status: }
-  //     }
-  //   })
-  // })
   const bookingRequestList = await Promise.all(promises);
-  sendResponse(res, 200, true, { clinics });
+  return sendResponse(
+    res,
+    200,
+    true,
+    {
+      bookings: bookingRequestList,
+      totalPages,
+    },
+    null,
+    null
+  );
 });
 module.exports = clinicController;

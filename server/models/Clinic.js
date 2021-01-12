@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const clinicSchema = Schema({
   name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   address: { type: String, required: true },
   startWorkingTime: { type: String, required: true },
   endWorkingTime: { type: String, required: true },

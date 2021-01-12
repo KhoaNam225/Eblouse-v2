@@ -5,93 +5,106 @@ const {
 } = require("../helpers/utils.helper");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const Booking = require("../models/Booking");
+// const Conversation = require("../models/Conversation");
+// const emailHelper = require("../helpers/email.helper");
+
 const userController = {};
 
-// userController.register = catchAsync(async (req, res, next) => {
-//   let { name, email, avatarUrl, password } = req.body;
-//   let user = await User.findOne({ email });
-//   if (user)
-//     return next(new AppError(409, "User already exists", "Register Error"));
+userController.register = catchAsync(async (req, res, next) => {
+  let { name, email, password, avatarUrl } = req.body;
+  let user = await User.findOne({ email });
+  if (user)
+    return next(new AppError(400, "User already exists", "Registration Error"));
 
-//   const salt = await bcrypt.genSalt(10);
-//   password = await bcrypt.hash(password, salt);
-//   user = await User.create({
-//     name,
-//     email,
-//     password,
-//     avatarUrl,
-//   });
-//   const accessToken = await user.generateToken();
-
-//   return sendResponse(res, 200, true, { user }, null, "Create user successful");
-// });
-
-//  user can send the booking to clinic
-userController.sendBookingRequest = catchAsync(async (req, res, next) => {
-  const userId = req.userId; // from
-  const toClinicId = req.params.id; //To
-
-  const user = await User.findById(toClinicId);
-  if (!user) {
-    return next(
-      new AppError(400, "User not found", "send Booking request Error")
-    );
-  }
-
-  let bookingRelate = await Booking.findOne({
-    from: userId,
-    to: toClinicId,
+  const salt = await bcrypt.genSalt(10);
+  password = await bcrypt.hash(password, salt);
+  user = await User.create({
+    name,
+    email,
+    password,
+    avatarUrl,
   });
-  if (!bookingRelate) {
-    await Booking.create({
-      from: userId,
-      to: toClinicId,
-      status: "pending",
-    });
-    return sendResponse(res, 200, true, null, null, "Request has been sent ");
-  } else {
-    switch (friendship.status) {
-      case "pending":
-        if (bookingRelate.from.equals(userId)) {
-          return next(
-            new AppError(
-              400,
-              "You have already send a booking to this clinic",
-              "Sent booking error"
-            )
-          );
-        }
-        break;
-      case "active":
-        return next(
-          new AppError(
-            400,
-            "Users already booked an appointment",
-            "booking accerpted Error"
-          )
-        );
-        break;
-      case "cancelled":
-      case "done":
-        bookingRelate.from = userId;
-        bookingRelate.to = toClinicId;
-        bookingRelate.status = "requesting";
-        await bookingRelate.save();
-        return sendResponse(
-          res,
-          200,
-          true,
-          null,
-          { bookingRelate },
-          "request has been sent "
-        );
-        break;
-      default:
-        break;
-    }
+  const accessToken = await user.generateToken();
+
+  const emailData = await emailHelper.renderEmailTemplate(
+    "welcome_email",
+    { name: name },
+    email
+  );
+
+  if (!emailData.error) {
+    emailHelper.send(emailData);
   }
+
+  return sendResponse(
+    res,
+    200,
+    true,
+    { user, accessToken },
+    null,
+    "Create user successful"
+  );
 });
 
-//  clinic
+userController.getCurrentUser = catchAsync(async (req, res, next) => {
+  const userId = req.userId;
+  const user = await User.findById(userId);
+  console.log(user);
+  if (!user)
+    return next(new AppError(400, "User not found", "Get Current User Error"));
+  return sendResponse(res, 200, true, user, null, "Get current user sucessful");
+});
+
+userController.getUsers = catchAsync(async (req, res, next) => {
+  let { page, limit, sortBy, ...filter } = req.query;
+
+  const currentUserId = req.userId;
+  page = parseInt(page) || 1;
+  limit = parseInt(limit) || 10;
+
+  const totalNumUsers = await User.find({ ...filter }).countDocuments();
+  const totalPages = Math.ceil(totalNumUsers / limit);
+  const offset = limit * (page - 1);
+
+  const users = await User.find({ ...filter })
+    .sort({ ...sortBy, createdAt: -1 })
+    .skip(offset)
+    .limit(limit);
+
+  return sendResponse(res, 200, true, { users, totalPages }, null, "");
+});
+
+// userController.getConversationList = catchAsync(async (req, res, next) => {
+//   let { page, limit } = req.query;
+
+//   const currentUserId = req.userId;
+//   page = parseInt(page) || 1;
+//   limit = parseInt(limit) || 10;
+
+//   const totalNumConversation = await Conversation.find({
+//     users: currentUserId,
+//   }).countDocuments();
+//   const totalPages = Math.ceil(totalNumConversation / limit);
+//   const offset = limit * (page - 1);
+
+//   let conversations = await Conversation.find({
+//     users: currentUserId,
+//   })
+//     .sort({ updatedAt: -1 })
+//     .skip(offset)
+//     .limit(limit)
+//     .populate("users");
+
+//   return sendResponse(
+//     res,
+//     200,
+//     true,
+//     { conversations, totalPages },
+//     null,
+//     null
+//   );
+// });
+
+userController.createNewBooking = catchAsync(async (req, res, next) => {});
+
 module.exports = userController;

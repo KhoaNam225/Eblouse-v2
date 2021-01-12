@@ -21,6 +21,19 @@ router.post(
 );
 
 /**
+ * @route GET api/reviews/clinic/:id?page=1&limit=10
+ * @description Get reviews of a blog with pagination
+ * @access Public
+ */
+router.get(
+  "/clinic/:id",
+  validators.validate([
+    param("id").exists().isString().custom(validators.checkObjectId),
+  ]),
+  reviewController.getReviewsOfClinic
+);
+
+/**
  * @route PUT api/reviews/:id
  * @description Update a review
  * @access Login required
@@ -28,10 +41,10 @@ router.post(
 router.put(
   "/:id",
   // authMiddleware.loginRequired,
-  validators.validate([
-    param("id").exists().isString().custom(validators.checkObjectId),
-    body("content", "Missing content").exists().notEmpty(),
-  ]),
+  // validators.validate([
+  //   param("id").exists().isString().custom(validators.checkObjectId),
+  //   body("content", "Missing content").exists().notEmpty(),
+  // ]),
   reviewController.updateSingleReview
 );
 /**
@@ -42,9 +55,9 @@ router.put(
 router.delete(
   "/:id",
   // authMiddleware.loginRequired,
-  validators.validate([
-    param("id").exists().isString().custom(validators.checkObjectId),
-  ]),
+  // validators.validate([
+  //   param("id").exists().isString().custom(validators.checkObjectId),
+  // ]),
   reviewController.deleteSingleReview
 );
 

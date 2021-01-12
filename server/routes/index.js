@@ -1,19 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-// // userApi
-// const userApi = require("./user.api");
-// router.use("/users", userApi);
+// userApi
+const userApi = require("./user.api");
+router.use("/users", userApi);
 
 // // doctorApi
 // const doctorApi = require("./doctor.api");
 // router.use("/doctors", doctorApi);
 
-// // bookingApi
-// const bookingApi = require("./booking.api");
-// router.use("/bookings", bookingApi);
+// bookingApi
+const bookingApi = require("./booking.api");
+router.use("/bookings", bookingApi);
 
 // auth api
+const authApi = require("./auth.api");
+router.use("/auth", authApi);
 
 // clinicApi;
 const clinicApi = require("./clinic.api");

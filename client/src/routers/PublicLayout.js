@@ -10,6 +10,8 @@ import BookingDetailPage from "../pages/BookingDetailPage";
 import BookingConfirm from "../pages/BookingConfirm";
 import PrivateRoute from "./PrivateRoute";
 import SearchListPage from "../pages/SearchListPage";
+import ClinicLoginPage from "../pages/ClinicLoginPage";
+import AdminPage from "../pages/Admin/AdminPage";
 
 import "../style/main.css";
 import { Container } from "react-bootstrap";
@@ -22,21 +24,22 @@ const PublicLayout = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
-          <Route exac path="/info" component={InformationPage} />
-          <Route exac path="/clinic/:id" component={ClinicDetailPage} />
+          <Route exact path="/info" component={InformationPage} />
+          <Route exact path="/clinic/:id" component={ClinicDetailPage} />
           {/* <Route exac path="/search" component={SearchListPage} /> */}
-
+          <Route exact path="/login/clinic" component={ClinicLoginPage} />
+          <PrivateRoute exact path="/admin/clinic/" component={AdminPage} />
           <PrivateRoute
-            exac
+            exact
             path="/booking/:id"
             component={BookingDetailPage}
           />
           <PrivateRoute
-            exac
+            exact
             path="/booking/confirm/:id"
             component={BookingConfirm}
           />
-          <Route exac component={NotFoundPage} />
+          <Route exact component={NotFoundPage} />
         </Switch>
       </Container>
     </>
