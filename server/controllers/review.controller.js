@@ -51,6 +51,24 @@ reviewController.getReviewsOfClinic = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, { reviews, totalPages }, null, "");
 });
 
+reviewController.getRandomReview = catchAsync(async (req, res, next) => {
+  const reviews = await Review.find({})
+    .populate("user", ["name", "avatarUrl"])
+    .populate("clinic", ["name", "address"]);
+  if (!reviews)
+    return next(
+      new AppError(400, "Reviews not found ", "get random review error")
+    );
+  return sendResponse(
+    res,
+    200,
+    true,
+    reviews,
+    null,
+    "get random reviews sucessful"
+  );
+});
+
 reviewController.updateSingleReview = catchAsync(async (req, res, next) => {
   const userId = req.userId;
   const reviewId = req.params.id;

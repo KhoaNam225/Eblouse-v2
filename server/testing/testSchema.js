@@ -121,7 +121,7 @@ const createRandomUsers = async (userNum) => {
         name: faker.name.findName(),
         email: faker.internet.email().toLowerCase(),
         password: password,
-        avatarUrl: faker.image.avatar(),
+        avatarUrl: faker.image.food(),
       });
 
       console.log(`Created user ${user._id}`);

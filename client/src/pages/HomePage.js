@@ -13,19 +13,19 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(reviewsActions.getReviews());
+    dispatch(reviewsActions.getRandomReviews());
   }, [dispatch]);
 
   const getReviewCardsList = () => {
     const cards = reviews.map((review) => (
       <ReviewCard
-        avatar={review.avatar}
-        clinicName={review.clinicName}
-        address={review.address}
-        description={review.desc}
-        comment={review.comment}
+        avatar={review.user.avatarUrl}
+        clinicName={review.clinic.name}
+        address={review.clinic.address}
+        description={"Description Here"}
+        comment={review.content}
         rating={review.rating}
-        key={review.clinicName}
+        key={review._id}
         onClick={() => {
           history.push("/clinic/5ff8190e5755f18df89c80e8");
         }}

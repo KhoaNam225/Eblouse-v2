@@ -34,6 +34,13 @@ router.get(
 );
 
 /**
+ * @route GET api/reviews/clinic/:id?page=1&limit=10
+ * @description Get reviews of a blog with pagination
+ * @access Public
+ */
+router.get("/", reviewController.getRandomReview);
+
+/**
  * @route PUT api/reviews/:id
  * @description Update a review
  * @access Login required
