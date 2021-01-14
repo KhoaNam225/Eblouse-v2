@@ -17,7 +17,12 @@ const authReducer = (state = initialState, action) => {
     case types.LOGIN_SUCCESS:
     case types.LOGIN_FACEBOOK_SUCCESS:
     case types.LOGIN_GOOGLE_SUCCESS:
-      return { ...state, loading: false, user: payload.user };
+      return {
+        ...state,
+        loading: false,
+        user: payload.user,
+        isAuthenticated: true,
+      };
     case types.GET_CURRENT_USER_SUCCESS:
       return {
         ...state,

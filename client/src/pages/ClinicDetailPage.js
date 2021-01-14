@@ -150,18 +150,6 @@ const ClinicInfo = ({ clinic }) => {
           <p style={{ fontSize: "0.8em" }}>
             <span style={{ color: "grey" }}>{status}</span>
           </p>
-          {/* <p style={{ fontSize: "0.8em" }}>
-            <strong>Morning:</strong>{" "}
-            <span style={{ color: "grey" }}>{morning.join(", ")}</span>
-          </p>
-          <p style={{ fontSize: "0.8em" }}>
-            <strong>Afternoon:</strong>{" "}
-            <span style={{ color: "grey" }}>{afternoon.join(", ")}</span>
-          </p>
-          <p style={{ fontSize: "0.8em" }}>
-            <strong>Evening:</strong>{" "}
-            <span style={{ color: "grey" }}>{evening.join(", ")}</span>
-          </p> */}
         </div>
       </div>
     );
@@ -237,7 +225,9 @@ const ClinicInfo = ({ clinic }) => {
               <Form.Label>Choose your doctor</Form.Label>
               <Form.Control as="select">
                 {doctors.map((doctor, index) => (
-                  <option key={index}>{doctor.name}</option>
+                  <option
+                    key={index}
+                  >{`${doctor.firstName} ${doctor.lastName}`}</option>
                 ))}
               </Form.Control>
             </Form.Group>
@@ -281,7 +271,7 @@ const ClinicReview = ({ clinic }) => {
                 fontWeight: "bold",
               }}
             >
-              {`${review.user.firstName} ${review.user.lastName}`}
+              {`${review.user.name}`}
             </p>
             <p
               style={{
@@ -336,7 +326,9 @@ const ClinicReview = ({ clinic }) => {
         </h2>
       </div>
       <div className="reviews-detail">{getReviewCards(reviewsNum)}</div>
-      <button onClick={() => handleShowMore()}>Show More</button>
+      {reviewsNum < reviews.length ? (
+        <button onClick={() => handleShowMore()}>Show More</button>
+      ) : null}
     </div>
   );
 };

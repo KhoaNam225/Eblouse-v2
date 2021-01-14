@@ -5,7 +5,7 @@ const Clinic = require("./Clinic");
 const bookingSchema = Schema(
   {
     user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
-    // doctor: { type: Schema.Types.ObjectId, required: true, ref: "Doctor" },
+    doctor: { type: Schema.Types.ObjectId, required: true, ref: "Doctor" },
     clinic: { type: Schema.Types.ObjectId, required: true, ref: "Clinic" },
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },

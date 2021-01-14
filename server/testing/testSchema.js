@@ -158,6 +158,7 @@ const createRandomDoctors = async (
       let doctor = await Doctor.create({
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
+        avatarUrl: faker.image.cats(),
         gender: genders[getRandomInt(0, genders.length - 1)],
         status: status[getRandomInt(0, status.length - 1)],
         qualification: qual._id,
@@ -319,6 +320,13 @@ const createRandomBooking = async (users, clinics) => {
           stat = status[getRandomInt(0, status.length - 2)];
         }
 
+        // Set the start time to morning or afternoon
+        if (getRandomInt(0, 1) == 0) {
+          startTime.setHours(getRandomInt(8, 10), 0, 0);
+        } else {
+          startTime.setHours(getRandomInt(13, 15), 0, 0);
+        }
+
         endTime = new Date(startTime.getTime() + 3600 * 1000);
 
         let booking = await Booking.create({
@@ -391,4 +399,4 @@ const main = async (genData = false) => {
   console.log(JSON.stringify(booking, null, 2));
 };
 
-// main(true);
+//main(true);

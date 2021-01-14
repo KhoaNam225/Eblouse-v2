@@ -7,6 +7,7 @@
 }
 
 .home-page-review-card {
+  cursor: pointer;
   width: 400px;
   border: none;
   border-radius: 5px;

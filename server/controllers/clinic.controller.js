@@ -164,4 +164,5 @@ clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
     null
   );
 });
+
 module.exports = clinicController;

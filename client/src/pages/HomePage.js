@@ -27,7 +27,7 @@ const HomePage = () => {
         rating={review.rating}
         key={review._id}
         onClick={() => {
-          history.push("/clinic/5ff8190e5755f18df89c80e8");
+          history.push(`/clinic/${review.clinic._id}`);
         }}
       />
     ));

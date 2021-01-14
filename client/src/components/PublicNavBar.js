@@ -1,10 +1,9 @@
 import { Modal, Button, Form, Col, Nav } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
 import { useSelector, useDispatch } from "react-redux";
 import authActions from "../redux/actions/auth.actions";
-import usersActions from "../redux/actions/users.actions";
 import logo from "../images/ebloue-logo.png";
 import "../style/PublicNavBar.css";
 
@@ -44,10 +43,6 @@ const PublicNavBar = () => {
     setShowModal(false);
   };
 
-  const showUserDetailModal = () => {
-    setShowUserDetailInputModal(true);
-  };
-
   const hideUserDetailModal = () => {
     setShowUserDetailInputModal(false);
   };
@@ -55,12 +50,6 @@ const PublicNavBar = () => {
   const hanelModalsTransition = () => {
     setShowModal(false);
     setShowUserDetailInputModal(true);
-  };
-
-  const handleUserLogin = () => {
-    dispatch(usersActions.userLogin());
-    setShowModal(false);
-    setShowUserDetailInputModal(false);
   };
 
   const loginWithFacebook = (response) => {
@@ -72,7 +61,6 @@ const PublicNavBar = () => {
     dispatch(authActions.loginGoogle(response.accessToken));
     setShowModal(false);
     setShowUserDetailInputModal(false);
-    // if (isAuthenticated) return <Redirect to="/" />;
   };
 
   useEffect(() => {
@@ -83,6 +71,47 @@ const PublicNavBar = () => {
     };
   }, []);
 
+  const UserInfoButton = ({ user }) => {
+    const [showActionMenu, setShowActionMenu] = useState(false);
+
+    const handleLogout = () => {
+      setShowActionMenu(false);
+      dispatch(authActions.logout());
+    };
+
+    return (
+      <div style={{ position: "relative" }}>
+        <button
+          className="user-info-button"
+          onClick={() => setShowActionMenu(!showActionMenu)}
+        >
+          <i
+            className="fas fa-bars"
+            style={{ marginRight: 10, fontSize: "1.1em" }}
+          ></i>
+          <img className="user-avatar" src={user.avatarUrl} alt="user avatar" />
+        </button>
+        {showActionMenu ? (
+          <div className="user-action-menu">
+            <div className="action-item">
+              <i className="fas fa-user" style={{ marginRight: 15 }}></i>
+              <p style={{ display: "inline" }}>
+                <strong>Account setting</strong>
+              </p>
+            </div>
+            <div className="action-item" onClick={handleLogout}>
+              <i
+                className="fas fa-sign-out-alt"
+                style={{ marginRight: 15 }}
+              ></i>
+              <p style={{ display: "inline" }}>Log out</p>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    );
+  };
+
   const FullNavBar = () => {
     return (
       <>
@@ -91,30 +120,37 @@ const PublicNavBar = () => {
             <img src={logo} alt="Eblouse" width="100px" />
           </div>
           <div className="nav-middle">
-            <button
-              className="nav-btn"
-              onClick={() => setSearchMode(BOOKING_SEARCH_MODE)}
-            >
-              Book an appointment
-            </button>
-            <button
-              className="nav-btn"
-              onClick={() => {
-                setSearchMode(REVIEWS_SEARCH_MODE);
-              }}
-            >
-              See reviews
-            </button>
-            {scrollOffsetY > 0 ? (
+            <div className="change-modes-btn">
+              <button
+                className="nav-btn"
+                onClick={() => setSearchMode(BOOKING_SEARCH_MODE)}
+              >
+                Book an appointment
+              </button>
               <button
                 className="nav-btn"
                 onClick={() => {
-                  setshowFullClicked(false);
+                  setSearchMode(REVIEWS_SEARCH_MODE);
                 }}
               >
-                Show Less
+                See reviews
               </button>
-            ) : null}
+              {scrollOffsetY > 0 ? (
+                <button
+                  className="nav-btn"
+                  onClick={() => {
+                    setshowFullClicked(false);
+                  }}
+                >
+                  Show Less
+                </button>
+              ) : null}
+            </div>
+            {searchMode === BOOKING_SEARCH_MODE ? (
+              <BookingSearchBar />
+            ) : (
+              <ReviewsSearchBar />
+            )}
           </div>
           <div className="nav-links">
             <Nav.Link href="/">Home Page</Nav.Link>
@@ -123,15 +159,10 @@ const PublicNavBar = () => {
             ) : user == null ? (
               <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
             ) : (
-              <Nav.Link>{user.name}</Nav.Link>
+              <UserInfoButton user={user} />
             )}
           </div>
         </div>
-        {searchMode === BOOKING_SEARCH_MODE ? (
-          <BookingSearchBar />
-        ) : (
-          <ReviewsSearchBar />
-        )}
       </>
     );
   };
@@ -163,7 +194,7 @@ const PublicNavBar = () => {
             ) : user == null ? (
               <Nav.Link onClick={handleShowModal}>Login</Nav.Link>
             ) : (
-              <Nav.Link>{user.name}</Nav.Link>
+              <UserInfoButton user={user} />
             )}
           </div>
         </div>
@@ -218,7 +249,22 @@ const PublicNavBar = () => {
             <GoogleLogin
               className="google-btn d-flex justify-content-center"
               clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login with Google"
+              render={(renderProps) => (
+                <button
+                  className="login-btn"
+                  style={{
+                    backgroundColor: "#ef4f4f",
+                  }}
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <i
+                    className="fab fa-google"
+                    style={{ marginRight: "1em" }}
+                  ></i>
+                  Login with Google
+                </button>
+              )}
               onSuccess={loginWithGoogle}
               onFailure={(err) => console.log("GOOGLE LOGIN ERROR", err)}
               cookiePolicy="single_host_origin"
@@ -227,25 +273,20 @@ const PublicNavBar = () => {
               appId={FB_APP_ID}
               fields="name,email,picture"
               callback={loginWithFacebook}
-              icon="fa-facebook"
               onFailure={(err) => console.log("FB LOGIN ERROR", err)}
-              containerStyle={{
-                textAlign: "center",
-                backgroundColor: "#3b5998",
-                borderColor: "#3b5998",
-                flex: 1,
-                display: "flex",
-                color: "#fff",
-                cursor: "pointer",
-                marginBottom: "3px",
-              }}
-              buttonStyle={{
-                flex: 1,
-                textTransform: "none",
-                padding: "12px",
-                background: "none",
-                border: "none",
-              }}
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  className="login-btn"
+                  style={{ backgroundColor: "#4267B2" }}
+                >
+                  <i
+                    className="fab fa-facebook-square"
+                    style={{ marginRight: "1em" }}
+                  ></i>
+                  Login with Facebook
+                </button>
+              )}
             />
           </div>
           <div className="login-signup-divider" style={{ marginTop: 20 }}>
