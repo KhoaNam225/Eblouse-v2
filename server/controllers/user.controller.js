@@ -5,6 +5,7 @@ const {
 } = require("../helpers/utils.helper");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const Clinic = require("../models/Clinic");
 // const Conversation = require("../models/Conversation");
 // const emailHelper = require("../helpers/email.helper");
 
@@ -48,10 +49,20 @@ userController.register = catchAsync(async (req, res, next) => {
 
 userController.getCurrentUser = catchAsync(async (req, res, next) => {
   const userId = req.userId;
-  const user = await User.findById(userId);
+  let user = await User.findById(userId);
+  let clinic = await Clinic.findById(userId);
+
   console.log(user);
-  if (!user)
+  if (!user && !clinic)
     return next(new AppError(400, "User not found", "Get Current User Error"));
+
+  let returnedUser = user ? user.toJSON() : clinic.toJSON();
+
+  if (user) returnedUser.isAdmin = false;
+  else returnedUser.isAdmin = true;
+
+  user = returnedUser;
+
   return sendResponse(res, 200, true, user, null, "Get current user sucessful");
 });
 

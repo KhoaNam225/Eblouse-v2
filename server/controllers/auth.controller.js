@@ -4,6 +4,7 @@ const {
   sendResponse,
 } = require("../helpers/utils.helper");
 const User = require("../models/User");
+const Clinic = require("../models/Clinic");
 const bcrypt = require("bcryptjs");
 
 const authController = {};
@@ -35,30 +36,41 @@ authController.loginWithFaceBookOrGoogle = catchAsync(
     let profile = req.user;
     profile.email = profile.email.toLowerCase();
     let user = await User.findOne({ email: profile.email });
+    let clinic = await Clinic.findOne({ email: profile.email });
+
+    let returnedUser = null;
+
     if (user) {
-      user = await User.findByIdAndUpdate(
+      returnedUser = await User.findByIdAndUpdate(
         user._id,
         { avatarUrl: profile.avatarUrl },
         { new: true }
       );
+    } else if (clinic) {
+      returnedUser = await Clinic.findById(clinic._id);
     } else {
       let newPassword = "" + Math.floor(Math.random() * 100000000);
       const salt = await bcrypt.genSalt(10);
       newPassword = await bcrypt.hash(newPassword, salt);
 
-      user = await User.create({
+      returnedUser = await User.create({
         name: profile.name,
         email: profile.email,
         password: newPassword,
         avatarUrl: profile.avatarUrl,
       });
     }
-    const accessToken = await user.generateToken();
+    const accessToken = await returnedUser.generateToken();
+    returnedUser = returnedUser.toJSON();
+
+    if (clinic) returnedUser.isAdmin = true;
+    else returnedUser.isAdmin = false;
+
     return sendResponse(
       res,
       200,
       true,
-      { user, accessToken },
+      { user: returnedUser, accessToken },
       null,
       "Login successful"
     );

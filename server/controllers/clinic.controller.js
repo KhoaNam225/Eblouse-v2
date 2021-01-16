@@ -13,13 +13,29 @@ const { findById } = require("../models/Clinic");
 
 const clinicController = {};
 
-//  user can search clinic by query in category
 clinicController.getSearchCategory = catchAsync(async (req, res, next) => {
-  let { query } = req.query;
-  let clinicList = await Clinic.findOne({ query });
+  let query = req.body.query;
+  let clinicList = await Clinic.find({}).populate("specializations");
+
+  clinicList = clinicList.filter(function (clinic) {
+    let specs = clinic.specializations;
+    for (let i = 0; i < specs.length; i++) {
+      if (specs[i].name == query) return true;
+    }
+    return false;
+  });
+
+  console.log("khasdhjhjqwgdqwehf", clinicList);
   if (!clinicList)
     return next(new AppError(404, "Sepecialization not found", "Query Error"));
-  return sendResponse(res, 200, true, { clinicList }, null, "Query success");
+  return sendResponse(
+    res,
+    200,
+    true,
+    { query, clinicList },
+    null,
+    "Query success"
+  );
 });
 
 //  user can get detail of clinic

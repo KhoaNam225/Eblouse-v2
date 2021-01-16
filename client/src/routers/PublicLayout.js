@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import PublicNavBar from "../components/PublicNavBar";
+import Footer from "../components/Footer";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import InformationPage from "../pages/InformationPage";
@@ -41,6 +42,7 @@ const PublicLayout = () => {
           <Route exact component={NotFoundPage} />
         </Switch>
       </Container>
+      <Footer />
     </>
   );
 };
