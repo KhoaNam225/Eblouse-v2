@@ -25,7 +25,6 @@ clinicController.getSearchCategory = catchAsync(async (req, res, next) => {
     return false;
   });
 
-  console.log("khasdhjhjqwgdqwehf", clinicList);
   if (!clinicList)
     return next(new AppError(404, "Sepecialization not found", "Query Error"));
   return sendResponse(

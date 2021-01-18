@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import PublicNavBar from "../components/PublicNavBar";
+import { PublicNavBar } from "../components/navbar";
 import Footer from "../components/Footer";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";

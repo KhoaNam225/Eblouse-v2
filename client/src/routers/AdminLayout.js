@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import PrivateRoute from "./PrivateRoute";
 import NotFoundPage from "../pages/NotFoundPage";
 import AdminPage from "../pages/Admin/AdminPage";
-import AdminNavBar from "../components/AdminNavBar";
+import { AdminNavBar } from "../components/navbar";
 
 const AdminLayout = () => {
   return (

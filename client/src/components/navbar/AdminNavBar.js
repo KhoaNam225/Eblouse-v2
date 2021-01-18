@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Nav } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import logo from "../images/ebloue-logo.png";
-import authActions from "../redux/actions/auth.actions";
+import logo from "../../images/ebloue-logo.png";
+import authActions from "../../redux/actions/auth.actions";
 
-import "../style/AdminNavBar.css";
+import "../../style/AdminNavBar.css";
 
 const AdminNavBar = () => {
   const dispatch = useDispatch();

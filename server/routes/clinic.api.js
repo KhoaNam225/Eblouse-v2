@@ -11,7 +11,7 @@ const validators = require("../middlewares/validator");
  * @access Public
  */
 
-router.get(
+router.post(
   "/search",
   validators.validate([body("query", "No query").exists().notEmpty()]),
   clinicController.getSearchCategory
