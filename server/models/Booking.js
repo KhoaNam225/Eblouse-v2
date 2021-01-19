@@ -9,7 +9,11 @@ const bookingSchema = Schema(
     clinic: { type: Schema.Types.ObjectId, required: true, ref: "Clinic" },
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
-    status: { type: String, enum: ["Pending", "Active", "Cancelled", "Done"] },
+    status: {
+      type: String,
+      enum: ["Pending", "Accepted", "Cancelled", "Done"],
+    },
+    reason: { type: String, required: true },
   },
   {
     timestamps: true,

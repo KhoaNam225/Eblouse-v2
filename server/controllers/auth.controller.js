@@ -11,22 +11,44 @@ const authController = {};
 
 authController.loginWithEmail = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email }, "+password");
-  if (!user)
+  let user = await User.findOne({ email }, "+password");
+  let clinic = await Clinic.findOne({ email }, "+password");
+  if (!user && !clinic)
     return next(new AppError(400, "Invalid credentials", "Login error"));
 
-  const isMatch = await bcrypt.compare(password, user.password);
+  let isMatch = false;
+  if (user) isMatch = await bcrypt.compare(password, user.password);
+  else isMatch = password === clinic.password;
+
   if (!isMatch) return next(new AppError(400, "Wrong password", "Login error"));
 
-  const accessToken = await user.generateToken();
-  return sendResponse(
-    res,
-    200,
-    true,
-    { user, accessToken },
-    null,
-    "Login successful"
-  );
+  if (user) {
+    const accessToken = await user.generateToken();
+    user = user.toJSON();
+    user.isAdmin = false;
+
+    return sendResponse(
+      res,
+      200,
+      true,
+      { user, accessToken },
+      null,
+      "Login successful"
+    );
+  } else {
+    const accessToken = await clinic.generateToken();
+    clinic = clinic.toJSON();
+    clinic.isAdmin = true;
+
+    return sendResponse(
+      res,
+      200,
+      true,
+      { user: clinic, accessToken },
+      null,
+      "Login successful"
+    );
+  }
 });
 
 authController.loginWithFaceBookOrGoogle = catchAsync(

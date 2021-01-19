@@ -8,6 +8,7 @@ const loginRequest = ({ email, password }) => async (dispatch) => {
     const res = await api.post("/auth/login", { email, password });
     localStorage.setItem("accessToken", res.data.data.accessToken);
     dispatch({ type: types.LOGIN_SUCCESS, payload: res.data.data });
+    toast.success(`Welcom ${res.data.data.user.name}`);
   } catch (error) {
     console.log(error);
     dispatch({ type: types.LOGIN_FAILURE, payload: error });

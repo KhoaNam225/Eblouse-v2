@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Modal } from "react-bootstrap";
+import { Modal, Form, Button } from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
 
@@ -16,6 +16,9 @@ const LoginForm = ({
   setShowModal,
   setShowUserDetailInputModal,
 }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const dispatch = useDispatch();
 
   const loginWithFacebook = (response) => {
@@ -23,8 +26,16 @@ const LoginForm = ({
     setShowModal(false);
     setShowUserDetailInputModal(false);
   };
+
   const loginWithGoogle = (response) => {
     dispatch(authActions.loginGoogle(response.accessToken));
+    setShowModal(false);
+    setShowUserDetailInputModal(false);
+  };
+
+  const loginWithEmailPassword = (e) => {
+    e.preventDefault();
+    dispatch(authActions.loginRequest({ email: email, password: password }));
     setShowModal(false);
     setShowUserDetailInputModal(false);
   };
@@ -38,6 +49,43 @@ const LoginForm = ({
         <div className="login-signup-divider">
           <div className="left"></div>
           <p className="text">Login</p>
+          <div className="right"></div>
+        </div>
+        <Form onSubmit={loginWithEmailPassword}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formBasicPassword">
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </Form.Group>
+          <button
+            className="login-btn"
+            style={{
+              backgroundColor: "#5aa469",
+            }}
+            type="submit"
+          >
+            Login
+          </button>
+        </Form>
+        <div className="login-signup-divider" style={{ marginTop: 20 }}>
+          <div className="left"></div>
+          <p className="text">Or</p>
           <div className="right"></div>
         </div>
         <div className="login-signup-box">
@@ -80,11 +128,6 @@ const LoginForm = ({
               </button>
             )}
           />
-        </div>
-        <div className="login-signup-divider" style={{ marginTop: 20 }}>
-          <div className="left"></div>
-          <p className="text">Signup</p>
-          <div className="right"></div>
         </div>
         <div className="login-signup-box">
           <button

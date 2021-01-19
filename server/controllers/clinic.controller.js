@@ -68,14 +68,18 @@ clinicController.getSingleClinic = catchAsync(async (req, res, next) => {
 
 // user can see the clinic list
 clinicController.getListOfClinic = catchAsync(async (req, res, next) => {
-  let { page, limit } = { ...req.query };
+  let { page, limit, sortBy, ...filter } = { ...req.query };
   page = parseInt(page) || 1;
   limit = parseInt(limit) || 10;
-  const totalClinic = await Clinic.countDocuments();
+  const totalClinic = await Clinic.countDocuments({ ...filter });
   const totalPages = Math.ceil(totalClinic / limit);
   const offset = limit * (page - 1);
 
-  const clinics = await Clinic.find({}).skip(offset).limit(limit);
+  const clinics = await Clinic.find({ filter })
+    .sort({ ...sortBy, createAt: -1 })
+    .skip(offset)
+    .limit(limit)
+    .populate("specialization");
 
   return sendResponse(
     res,
@@ -130,54 +134,15 @@ clinicController.cancelBookingRequest = catchAsync(async (req, res, next) => {
 //  Clinic can see the list of booking
 clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
   let { page, limit, sortBy, ...filter } = { ...req.query };
-  const currentUser = req.userId;
-  clinicId = await Booking.findById({ clinic: clinic._id });
-  page = parseInt(page) || 1;
-  limit = parseInt(limit) || 10;
+  const currentUser = req.params.id;
 
   let bookingRelate = await Booking.find({
-    from: userId,
-    status: "Pending",
-  });
-  const clinicIDs = bookingRelate.map((bookingRelate) => {
-    return bookingRelate.from;
-  });
+    $or: [{ user: currentUser }, { clinic: currentUser }],
+  })
+    .populate("doctor")
+    .populate("user");
 
-  const totalBooking = await User.countDocuments({
-    ...filter,
-    isDeletedFalse: false,
-    _id: { $in: clinicIDs },
-  });
-  const totalPages = Math.ceil(totalBooking / limit);
-  const offset = limit * (page - 1);
-
-  let clinics = await Clinic.find({ ...filter, _id: { $in: clinicIDs } })
-    .sort({ ...sortBy, createAt: -1 })
-    .skip(offset)
-    .limit(limit);
-  const promises = users.map(async (user) => {
-    let temp = user.toJSON();
-
-    temp.bookingRelate = bookingRelate.find((bookingRelate) => {
-      if (bookingRelate.from.equals(user._id)) {
-        return { status: bookingRelate.status };
-      }
-      return false;
-    });
-    return temp;
-  });
-  const bookingRequestList = await Promise.all(promises);
-  return sendResponse(
-    res,
-    200,
-    true,
-    {
-      bookings: bookingRequestList,
-      totalPages,
-    },
-    null,
-    null
-  );
+  return sendResponse(res, 200, true, bookingRelate, null, null);
 });
 
 module.exports = clinicController;

@@ -19,7 +19,7 @@
   justify-content: center;
 }
 
-.login-signup-box .login-btn {
+.login-btn {
   width: 100%;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -31,11 +31,11 @@
   color: white;
 }
 
-.login-signup-box .login-btn:hover {
+.login-btn:hover {
   opacity: 0.8;
 }
 
-.login-signup-box .signup-btn {
+.signup-btn {
   width: 100%;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -47,13 +47,13 @@
   border: 1px solid grey;
 }
 
-.login-signup-box .signup-btn:nth-child(1):hover {
+.signup-btn:nth-child(1):hover {
   background-color: #ef4f4f;
   color: white;
   border: none;
 }
 
-.login-signup-box .signup-btn:nth-child(2):hover {
+.signup-btn:nth-child(2):hover {
   background-color: #4267b2;
   color: white;
   border: none;

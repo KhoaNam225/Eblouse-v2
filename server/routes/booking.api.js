@@ -23,7 +23,7 @@ const validators = require("../middlewares/validator");
  * @access Login required
  */
 
-router.get("/", clinicController.getBookingListUser);
+router.get("/:id", clinicController.getBookingListUser);
 
 /**
  * @route POST api/booking/:id
