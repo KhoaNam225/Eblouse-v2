@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import EmptyBookingCard from "./EmptyBookingCard";
 const CancelledBookingCard = ({ booking }) => {
   const startDate = new Date(booking.startTime);
   const endDate = new Date(booking.endTime);
@@ -71,9 +72,13 @@ const CancelledBookings = ({ bookings }) => {
 
   return (
     <Container className="booking-card-wrapper" fluid>
-      {cancelledBookings.map((booking) => (
-        <CancelledBookingCard booking={booking} key={booking._id} />
-      ))}
+      {cancelledBookings.length === 0 ? (
+        <EmptyBookingCard content="There are no cancelled appointments at the moment" />
+      ) : (
+        cancelledBookings.map((booking) => (
+          <CancelledBookingCard booking={booking} key={booking._id} />
+        ))
+      )}
     </Container>
   );
 };

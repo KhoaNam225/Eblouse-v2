@@ -77,9 +77,9 @@ const BookingContent = () => {
           </Col>
           <Col md={9}>
             {showMode === APPROVED_BOOKING ? (
-              <ApprovedBooking bookings={bookings} />
+              <ApprovedBooking bookings={bookings} user={user} />
             ) : showMode === PENDING_BOOKING ? (
-              <PendingBookings bookings={bookings} />
+              <PendingBookings bookings={bookings} user={user} />
             ) : showMode === CANCELLED_BOOKING ? (
               <CancelledBookings bookings={bookings} />
             ) : (

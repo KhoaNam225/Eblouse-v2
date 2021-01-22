@@ -1,5 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import EmptyBookingCard from "./EmptyBookingCard";
+
 const CompletedBookingCard = ({ booking }) => {
   const startDate = new Date(booking.startTime);
   const endDate = new Date(booking.endTime);
@@ -71,9 +73,13 @@ const CompletedBookings = ({ bookings }) => {
 
   return (
     <Container className="booking-card-wrapper" fluid>
-      {completedBookings.map((booking) => (
-        <CompletedBookingCard booking={booking} key={booking._id} />
-      ))}
+      {completedBookings.length === 0 ? (
+        <EmptyBookingCard content="There are no completed appointments at the moment" />
+      ) : (
+        completedBookings.map((booking) => (
+          <CompletedBookingCard booking={booking} key={booking._id} />
+        ))
+      )}
     </Container>
   );
 };

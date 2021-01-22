@@ -1,8 +1,18 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-const ApprovedBookingCard = ({ booking }) => {
+import { useDispatch } from "react-redux";
+import bookingsActions from "../../../../redux/actions/bookings.actions";
+import EmptyBookingCard from "./EmptyBookingCard";
+
+const ApprovedBookingCard = ({ booking, user }) => {
+  const dispatch = useDispatch();
+
   const startDate = new Date(booking.startTime);
   const endDate = new Date(booking.endTime);
+
+  const handleCancelBooking = () => {
+    dispatch(bookingsActions.cancelBookingRequest(user._id, booking._id));
+  };
 
   return (
     <div className="booking-card">
@@ -59,22 +69,32 @@ const ApprovedBookingCard = ({ booking }) => {
             {booking.status}
           </span>
         </p>
-        <button className="cancel-booking-btn">Cancel</button>
+        <button className="cancel-booking-btn" onClick={handleCancelBooking}>
+          Cancel
+        </button>
       </div>
     </div>
   );
 };
 
-const ApprovedBooking = ({ bookings }) => {
+const ApprovedBooking = ({ bookings, user }) => {
   const acceptedBookings = bookings.filter(
     (booking) => booking.status === "Accepted"
   );
 
   return (
     <Container className="booking-card-wrapper" fluid>
-      {acceptedBookings.map((booking) => (
-        <ApprovedBookingCard booking={booking} key={booking._id} />
-      ))}
+      {acceptedBookings.length === 0 ? (
+        <EmptyBookingCard content="There are no accepted appointments at the moment" />
+      ) : (
+        acceptedBookings.map((booking) => (
+          <ApprovedBookingCard
+            booking={booking}
+            key={booking._id}
+            user={user}
+          />
+        ))
+      )}
     </Container>
   );
 };

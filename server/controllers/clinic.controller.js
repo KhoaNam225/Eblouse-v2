@@ -94,6 +94,7 @@ clinicController.getListOfClinic = catchAsync(async (req, res, next) => {
 //  Clinic can see the booking request
 clinicController.acceptBookingRequest = catchAsync(async (req, res, next) => {
   const bookingId = req.params.id; //From
+  console.log(bookingId);
   let bookingRelate = await Booking.findOne({
     _id: bookingId,
     status: "Pending",
@@ -107,15 +108,16 @@ clinicController.acceptBookingRequest = catchAsync(async (req, res, next) => {
       )
     );
   }
-  bookingRelate.status = "Active";
+  bookingRelate.status = "Accepted";
   await bookingRelate.save();
   return sendResponse(res, 200, true, null, null, "Booking has been accepted");
 });
+
 clinicController.cancelBookingRequest = catchAsync(async (req, res, next) => {
   const bookingId = req.params.id; //From
   let bookingRelate = await Booking.findOne({
     _id: bookingId,
-    status: "Pending",
+    $or: [{ status: "Pending" }, { status: "Accepted" }],
   });
   if (!bookingRelate) {
     return next(

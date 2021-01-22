@@ -1,8 +1,22 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-const PendingBookingCard = ({ booking }) => {
+import { useDispatch } from "react-redux";
+import bookingsActions from "../../../../redux/actions/bookings.actions";
+import EmptyBookingCard from "./EmptyBookingCard";
+
+const PendingBookingCard = ({ booking, user }) => {
+  const dispatch = useDispatch();
+
   const startDate = new Date(booking.startTime);
   const endDate = new Date(booking.endTime);
+
+  const handleAcceptBooking = () => {
+    dispatch(bookingsActions.acceptBookingRequest(user._id, booking._id));
+  };
+
+  const handleCancelBooking = () => {
+    dispatch(bookingsActions.cancelBookingRequest(user._id, booking._id));
+  };
 
   return (
     <div className="booking-card">
@@ -60,24 +74,32 @@ const PendingBookingCard = ({ booking }) => {
           </span>
         </p>
         <div className="pending-btns">
-          <button className="cancel-booking-btn">Cancel</button>
-          <button className="approve-booking-btn">Approve</button>
+          <button className="cancel-booking-btn" onClick={handleCancelBooking}>
+            Cancel
+          </button>
+          <button className="approve-booking-btn" onClick={handleAcceptBooking}>
+            Approve
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-const PendingBookings = ({ bookings }) => {
+const PendingBookings = ({ bookings, user }) => {
   const pendingBookings = bookings.filter(
     (booking) => booking.status === "Pending"
   );
 
   return (
     <Container className="booking-card-wrapper" fluid>
-      {pendingBookings.map((booking) => (
-        <PendingBookingCard booking={booking} key={booking._id} />
-      ))}
+      {pendingBookings.length === 0 ? (
+        <EmptyBookingCard content="There are no pending appointments at the moment" />
+      ) : (
+        pendingBookings.map((booking) => (
+          <PendingBookingCard booking={booking} key={booking._id} user={user} />
+        ))
+      )}
     </Container>
   );
 };
