@@ -253,3 +253,33 @@
   background: #ef4f4f;
   color: white;
 }
+
+.booking .booking-box .booking-time-table {
+  width: 100%;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+button.booking-time-input,
+button.disabled,
+button.selected {
+  border: 1px solid #dddddd;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  transition: all 0.2s linear;
+  outline: none;
+}
+
+button.booking-time-input {
+  background: none;
+}
+
+button.booking-time-input:hover,
+button.selected {
+  background-color: #ef4f4f;
+  color: white;
+  border: 1px solid #ef4f4f;
+}

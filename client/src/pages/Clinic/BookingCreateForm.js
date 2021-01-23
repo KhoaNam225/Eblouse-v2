@@ -39,10 +39,14 @@ const BookingTimeTable = ({
   };
 
   return (
-    <div>
+    <div className="booking-time-table">
       <button
         className={
-          startTime === 8 ? "booking-time-input selected" : "booking-time-input"
+          checkedOccupiedTimeSlot(8)
+            ? "disabled"
+            : startTime === 8
+            ? "selected"
+            : "booking-time-input"
         }
         disabled={checkedOccupiedTimeSlot(8)}
         onClick={(e) => {
@@ -54,7 +58,11 @@ const BookingTimeTable = ({
       </button>
       <button
         className={
-          startTime === 9 ? "booking-time-input selected" : "booking-time-input"
+          checkedOccupiedTimeSlot(9)
+            ? "disabled"
+            : startTime === 9
+            ? "selected"
+            : "booking-time-input"
         }
         disabled={checkedOccupiedTimeSlot(9)}
         onClick={(e) => {
@@ -66,8 +74,10 @@ const BookingTimeTable = ({
       </button>
       <button
         className={
-          startTime === 10
-            ? "booking-time-input selected"
+          checkedOccupiedTimeSlot(10)
+            ? "disabled"
+            : startTime === 10
+            ? "selected"
             : "booking-time-input"
         }
         disabled={checkedOccupiedTimeSlot(10)}
@@ -80,8 +90,10 @@ const BookingTimeTable = ({
       </button>
       <button
         className={
-          startTime === 13
-            ? "booking-time-input selected"
+          checkedOccupiedTimeSlot(13)
+            ? "disabled"
+            : startTime === 13
+            ? "selected"
             : "booking-time-input"
         }
         disabled={checkedOccupiedTimeSlot(13)}
@@ -94,7 +106,9 @@ const BookingTimeTable = ({
       </button>
       <button
         className={
-          startTime === 14
+          checkedOccupiedTimeSlot(14)
+            ? "booking-time-input disabled"
+            : startTime === 14
             ? "booking-time-input selected"
             : "booking-time-input"
         }
@@ -108,7 +122,9 @@ const BookingTimeTable = ({
       </button>
       <button
         className={
-          startTime === 15
+          checkedOccupiedTimeSlot(15)
+            ? "booking-time-input disabled"
+            : startTime === 15
             ? "booking-time-input selected"
             : "booking-time-input"
         }
@@ -140,6 +156,7 @@ const BookingCreateForm = ({ doctors, clinicId }) => {
 
   const handleSelectDoctor = (e) => {
     setSelectedDoctor(e.target.value);
+    setStartTime(0);
   };
 
   const handleChangeReason = (e) => {
@@ -149,6 +166,7 @@ const BookingCreateForm = ({ doctors, clinicId }) => {
   const handleDateChange = (e) => {
     console.log(e.target.value);
     setBookingDate(new Date(e.target.value));
+    setStartTime(0);
   };
 
   const handleSubmit = (e) => {
@@ -178,6 +196,7 @@ const BookingCreateForm = ({ doctors, clinicId }) => {
 
       const accessToken = localStorage.getItem("accessToken");
       dispatch(bookingsActions.createBookingRequest(bookingInfo, accessToken));
+      setStartTime(0);
     }
   };
 
