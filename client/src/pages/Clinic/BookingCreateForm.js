@@ -107,9 +107,9 @@ const BookingTimeTable = ({
       <button
         className={
           checkedOccupiedTimeSlot(14)
-            ? "booking-time-input disabled"
+            ? "disabled"
             : startTime === 14
-            ? "booking-time-input selected"
+            ? "selected"
             : "booking-time-input"
         }
         disabled={checkedOccupiedTimeSlot(14)}
@@ -123,9 +123,9 @@ const BookingTimeTable = ({
       <button
         className={
           checkedOccupiedTimeSlot(15)
-            ? "booking-time-input disabled"
+            ? "disabled"
             : startTime === 15
-            ? "booking-time-input selected"
+            ? "selected"
             : "booking-time-input"
         }
         disabled={checkedOccupiedTimeSlot(15)}

@@ -14,6 +14,7 @@ const UserInfoButton = ({ user }) => {
   const handleLogout = () => {
     setShowActionMenu(false);
     dispatch(authActions.logout());
+    history.push("/");
   };
 
   const handleOpenAccountSetting = () => {
