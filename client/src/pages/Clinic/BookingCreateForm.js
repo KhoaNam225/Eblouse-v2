@@ -27,8 +27,7 @@ const BookingTimeTable = ({
   );
 
   const occupiedTimeSlot = bookingsByDoctor.map((booking) => {
-    const startTime = new Date(booking.startTime);
-    return startTime.getHours();
+    return new Date(booking.startTime).getHours();
   });
 
   const checkedOccupiedTimeSlot = (time) => {

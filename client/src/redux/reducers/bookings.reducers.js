@@ -39,7 +39,7 @@ const bookingsReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case types.CREATE_BOOKING_SUCCESS:
-      return { ...state, isLoading: false, bookigns: payload };
+      return { ...state, isLoading: false, bookings: payload };
 
     case types.CREATE_BOOKING_FAILURE:
       return { ...state, isLoading: false };

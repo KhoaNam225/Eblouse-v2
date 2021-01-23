@@ -142,16 +142,7 @@ userController.createNewBooking = catchAsync(async (req, res, next) => {
     reason: reason,
   });
 
-  const allBookings = await Booking.find({});
-
-  return sendResponse(
-    res,
-    200,
-    true,
-    allBookings,
-    null,
-    "Request has been sent"
-  );
+  return sendResponse(res, 200, true, null, null, "Request has been sent");
 });
 
 module.exports = userController;
