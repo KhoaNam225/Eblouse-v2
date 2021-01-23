@@ -35,6 +35,15 @@ const bookingsReducer = (state = initialState, action) => {
     case types.CANCEL_BOOKING_FAILURE:
       return { ...state, isLoading: false };
 
+    case types.CREATE_BOOKING_REQUEST:
+      return { ...state, isLoading: true };
+
+    case types.CREATE_BOOKING_SUCCESS:
+      return { ...state, isLoading: false, bookigns: payload };
+
+    case types.CREATE_BOOKING_FAILURE:
+      return { ...state, isLoading: false };
+
     default:
       return { ...state };
   }

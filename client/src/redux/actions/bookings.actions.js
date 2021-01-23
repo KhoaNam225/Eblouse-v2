@@ -48,10 +48,35 @@ const cancelBookingRequest = (userId, bookingId) => async (dispatch) => {
   }
 };
 
+const createBookingRequest = (bookingInfo, accessToken) => async (dispatch) => {
+  const { clinicId, doctor, startTime, endTime, reason } = bookingInfo;
+  dispatch({ type: types.CREATE_BOOKING_REQUEST, payload: null });
+  if (accessToken) {
+    const bearerToken = "Bearer " + accessToken;
+    api.defaults.headers.common["authorization"] = bearerToken;
+  }
+  console.log("DEBUG", endTime);
+  try {
+    const res = await api.post(`/bookings/${clinicId}`, {
+      doctor,
+      startTime,
+      endTime,
+      reason,
+    });
+    const bookings = res.data.data;
+    dispatch({ type: types.CREATE_BOOKING_SUCCESS, payload: bookings });
+    toast.success("Appointment created for you!");
+  } catch (error) {
+    dispatch({ type: types.CREATE_BOOKING_FAILURE, payload: null });
+    toast.error("Failed to create appointment");
+  }
+};
+
 const bookingsActions = {
   getBookingsList,
   acceptBookingRequest,
   cancelBookingRequest,
+  createBookingRequest,
 };
 
 export default bookingsActions;

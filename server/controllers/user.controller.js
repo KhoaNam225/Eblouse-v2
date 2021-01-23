@@ -4,6 +4,7 @@ const {
   sendResponse,
 } = require("../helpers/utils.helper");
 const User = require("../models/User");
+const Booking = require("../models/Booking");
 const bcrypt = require("bcryptjs");
 const Clinic = require("../models/Clinic");
 // const Conversation = require("../models/Conversation");
@@ -116,6 +117,41 @@ userController.getUsers = catchAsync(async (req, res, next) => {
 //   );
 // });
 
-userController.createNewBooking = catchAsync(async (req, res, next) => {});
+userController.createNewBooking = catchAsync(async (req, res, next) => {
+  const userID = req.userId;
+  const toClinicId = req.params.id;
+  const startTime = req.body.startTime;
+  const doctor = req.body.doctor;
+  const reason = req.body.reason;
+  const endTime = req.body.endTime;
+
+  const clinic = await Clinic.findById(toClinicId);
+  if (!clinic) {
+    return next(
+      new AppError(400, "Clinic not found", "Send booking request error")
+    );
+  }
+
+  await Booking.create({
+    user: userID,
+    clinic: toClinicId,
+    status: "Pending",
+    startTime: startTime,
+    endTime: endTime,
+    doctor: doctor,
+    reason: reason,
+  });
+
+  const allBookings = await Booking.find({});
+
+  return sendResponse(
+    res,
+    200,
+    true,
+    allBookings,
+    null,
+    "Request has been sent"
+  );
+});
 
 module.exports = userController;

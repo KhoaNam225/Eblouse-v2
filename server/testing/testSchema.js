@@ -308,7 +308,6 @@ const createRandomBooking = async (users, clinics) => {
           `Creating booking for user ${user._id}, clinic ${clinic._id}, doctor ${doctor}`
         );
 
-        let done = getRandomInt(0, 5) === 0 ? true : false;
         let startTime = null;
         let endTime = null;
         let stat = null;
@@ -341,6 +340,11 @@ const createRandomBooking = async (users, clinics) => {
             break;
         }
 
+        if (getRandomInt(0, 1) == 0) {
+          startTime.setHours(getRandomInt(8, 10), 0, 0);
+        } else {
+          startTime.setHours(getRandomInt(13, 15), 0, 0);
+        }
         endTime = new Date(startTime.getTime() + 3600 * 1000);
         let reason = faker.lorem.sentence();
         let booking = await Booking.create({

@@ -189,7 +189,7 @@
   right: 200px;
 }
 
-.info-wrapper .booking .booking-box button {
+.info-wrapper .booking .booking-box .booking-form-submit-btn {
   background-color: #61b15a;
   color: white;
   border-radius: 3px;
@@ -197,9 +197,10 @@
   padding: 10px 15px;
   border: none;
   transition: all 0.2s;
+  outline: none;
 }
 
-.info-wrapper .booking .booking-box button:hover {
+.info-wrapper .booking .booking-box .booking-form-submit-btn:hover {
   background-color: #ef4f4f;
 }
 

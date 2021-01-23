@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import clinicsActions from "../redux/actions/clinics.actions";
 import LoadingSpinner from "../components/LoadingSpinner";
+import BookingCreateForm from "./Clinic/BookingCreateForm";
 import { MultiItemsCarousel } from "../components/Carousel";
 
 import "../style/ClinicDetailPage.css";
-import { Form } from "react-bootstrap";
 
 const ClinicShowcase = ({ clinic }) => {
   const { name, specializations, address, avgRating, reviews, images } = clinic;
@@ -101,7 +101,6 @@ const ClinicInfo = ({ clinic }) => {
       specialization,
       avatarUrl,
       gender,
-      qualification,
       status,
     } = doctor;
     return (
@@ -116,7 +115,7 @@ const ClinicInfo = ({ clinic }) => {
         <div className="doctor-info">
           <p
             style={{ fontSize: "1.1em", fontWeight: "bold", paddingBottom: 5 }}
-          >{`${qualification.name} ${firstName} ${lastName}`}</p>
+          >{`Dr. ${firstName} ${lastName}`}</p>
           <p
             style={{
               fontSize: "0.8em",
@@ -213,30 +212,7 @@ const ClinicInfo = ({ clinic }) => {
           />
         </div>
       </div>
-      <div className="booking">
-        <div className="booking-box">
-          <h3 style={{ padding: "20px 0px" }}>Booking an Appoinment</h3>
-          <Form>
-            <Form.Group controlId="bookingForm.Reason">
-              <Form.Label>What is the reason for your visit?</Form.Label>
-              <Form.Control type="text" placeholder="Reason for visiting" />
-            </Form.Group>
-            <Form.Group controlId="bookingForm.Doctor">
-              <Form.Label>Choose your doctor</Form.Label>
-              <Form.Control as="select">
-                {doctors.map((doctor, index) => (
-                  <option
-                    key={index}
-                  >{`${doctor.firstName} ${doctor.lastName}`}</option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <button className="booking-form-submit-btn" type="submit">
-              Book
-            </button>
-          </Form>
-        </div>
-      </div>
+      <BookingCreateForm doctors={doctors} clinicId={clinic._id} />
     </div>
   );
 };
