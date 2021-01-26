@@ -6,7 +6,7 @@ import Carousel, {
 import "@brainhubeu/react-carousel/lib/style.css";
 import "../style/MultiItemsCarousel.css";
 
-export const MultiItemsCarousel = ({ items }) => {
+export const MultiItemsCarousel = ({ items, slidesNum, offset }) => {
   const NavigationArrows = ({ direction }) => {
     const label =
       direction === "left" ? (
@@ -20,14 +20,14 @@ export const MultiItemsCarousel = ({ items }) => {
   return (
     <div className="carousel-wrapper">
       <Carousel
-        offset={10}
+        offset={offset}
         draggable={false}
         plugins={[
           "infinite",
           {
             resolve: slidesToShowPlugin,
             options: {
-              numberOfSlides: 3,
+              numberOfSlides: slidesNum,
             },
           },
           {

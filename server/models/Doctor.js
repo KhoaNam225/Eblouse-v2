@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const doctorSchema = Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
+  avatarUrl: { type: String, required: true },
   gender: { type: String, enum: ["Male", "Female", "Other"] },
   status: { type: String, enum: ["Working", "On leave"] },
   qualification: {

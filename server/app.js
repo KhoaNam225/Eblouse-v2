@@ -1,11 +1,15 @@
 var express = require("express");
-require("dotenv").config();
-const cors = require("cors");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+require("dotenv").config();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const MONGODB_URI = process.env.MONGODB_URI;
+const passport = require("passport");
+require("./middlewares/passport");
+
+var indexRouter = require("./routes/index");
 const { AppError, sendResponse } = require("./helpers/utils.helper");
 
 var app = express();
@@ -16,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(passport.initialize());
 
 mongoose
   .connect(MONGODB_URI, {
@@ -27,13 +32,17 @@ mongoose
   })
   .then(() => {
     console.log(`Mongoose connected to ${MONGODB_URI}`);
-    require("./models/testSchema");
+    require("./testing/testSchema");
   })
-  .catch((error) => console.log(error));
+  .catch((err) => {
+    console.log(err);
+  });
 
-// catch 404 and forard to error handler
+app.use("/api", indexRouter);
+
 app.use((req, res, next) => {
-  next(new AppError(404, "Resource not found", "Resource not found"));
+  const err = new AppError(404, "Resource not found", "404 Not Found");
+  next(err);
 });
 
 app.use((err, req, res, next) => {
@@ -41,7 +50,7 @@ app.use((err, req, res, next) => {
   if (err.isOperational) {
     return sendResponse(
       res,
-      err.statusCode,
+      err.statusCode ? err.statusCode : 500,
       false,
       null,
       { message: err.message },
@@ -50,7 +59,7 @@ app.use((err, req, res, next) => {
   } else {
     return sendResponse(
       res,
-      500,
+      err.statusCode ? err.statusCode : 500,
       false,
       null,
       { message: err.message },

@@ -1,0 +1,13 @@
+.nav-bar {
+  padding: 5px 30px;
+}
+
+.nav-bar .nav-links .nav-link .admin-icons {
+  font-size: 1.1em;
+  color: #222831;
+  transition: all 0.2s;
+}
+
+.nav-bar .nav-links .nav-link .admin-icons:hover {
+  color: #f05454;
+}

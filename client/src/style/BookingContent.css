@@ -1,0 +1,107 @@
+.booking-card-wrapper {
+  padding-top: 20px;
+}
+
+.booking-card-wrapper .booking-card {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 25px 20px;
+  border: 1px solid #cdd0cb;
+  border-radius: 25px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.booking-card-wrapper .booking-card:hover {
+  box-shadow: 0px 0px 10px 2px #dddddd;
+  transform: scale(1.05);
+}
+
+.booking-card-wrapper .booking-card .doctor-info,
+.booking-card-wrapper .booking-card .patient-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px 10px 10px;
+}
+
+.booking-card-wrapper .booking-card .doctor-info p,
+.booking-card-wrapper .booking-card .patient-info p {
+  margin-left: 1em;
+  margin-bottom: 0;
+}
+
+.booking-card-wrapper .booking-card .doctor-info img,
+.booking-card-wrapper .booking-card .patient-info img {
+  object-fit: cover;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.booking-card-wrapper .booking-card .booking-info {
+  padding-left: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.booking-card-wrapper .booking-card .booking-info p {
+  margin: 0;
+  padding-left: 2em;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.booking-card-wrapper .booking-card .booking-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.booking-card-wrapper .booking-card .booking-action button {
+  padding: 10px 15px;
+  outline: none;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.booking-card-wrapper .booking-card .booking-action .cancel-booking-btn {
+  background-color: #ef4f4f;
+}
+
+.booking-card-wrapper .booking-card .booking-action .approve-booking-btn {
+  background-color: #61b15a;
+}
+
+.booking-card-wrapper .booking-card .booking-action button:hover {
+  box-shadow: 0px 0px 10px 1px #dddddd;
+}
+
+.empty-booking-card {
+  padding: 25px 20px;
+  border: 1px solid #cdd0cb;
+  border-radius: 25px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.empty-booking-card:hover {
+  box-shadow: 0px 0px 10px 2px #dddddd;
+  transform: scale(1.05);
+}

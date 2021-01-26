@@ -5,17 +5,16 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const userSchema = Schema(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     avatarUrl: { type: String, required: false },
-    isDeleted: { type: Boolean, default: false, select: false },
+    //isDeleted: { type: Boolean, default: false, select: false },
   },
   { timestamp: true }
 );
 
-userSchema.plugin(require("./plugins/isDeletedFalse"));
+//userSchema.plugin(require("./plugins/isDeletedFalse"));
 
 userSchema.methods.generateToken = async function () {
   const accessToken = await jwt.sign({ _id: this._id }, JWT_SECRET_KEY, {

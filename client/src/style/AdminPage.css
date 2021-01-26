@@ -1,0 +1,51 @@
+.admin-page-wrapper {
+  padding: 10px;
+}
+
+.admin-page-wrapper .tab-pane {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid #a6a9b6;
+  border-bottom: 1px solid #a6a9b6;
+  padding: 0px 10rem;
+}
+
+.admin-page-wrapper .tab-pane .tab-item {
+  cursor: pointer;
+  padding: 20px 20px;
+}
+
+.admin-page-wrapper .tab-pane .selected-tab {
+  border-bottom: 5px solid #f05454;
+  box-sizing: border-box;
+}
+
+.admin-page-wrapper .tab-pane .tab-item:hover {
+  background-color: rgba(235, 235, 235, 0.5);
+}
+
+.admin-page-wrapper .content-wrapper {
+  padding: 10px 10rem;
+}
+
+.booking-menu-item {
+  padding: 15px 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.booking-menu-item:hover {
+  background-color: rgba(235, 235, 235, 0.5);
+}
+
+.booking-menu-item p {
+  margin: 0;
+}
+
+.selected-booking-mode {
+  background-color: #f05454 !important;
+  color: white !important;
+  font-weight: bold !important;
+}

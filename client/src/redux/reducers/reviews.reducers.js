@@ -9,11 +9,11 @@ const reviewsReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case types.GET_REVIEWS_REQUEST:
+    case types.GET_RANDOM_REVIEWS_REQUEST:
       return { ...state, isLoading: true };
-    case types.GET_REVIEWS_SUCCESS:
+    case types.GET_RANDOM_REVIEWS_SUCCESS:
       return { ...state, isLoading: false, reviews: payload };
-    case types.GET_REVIEWS_FAILURE:
+    case types.GET_RANDOM_REVIEWS_FAILURE:
       return { ...state, isLoading: false };
     default:
       return { ...state };

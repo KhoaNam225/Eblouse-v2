@@ -1,0 +1,285 @@
+.info-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}
+
+.showcase-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.showcase-wrapper p,
+.showcase-wrapper h2 {
+  margin: 0;
+}
+
+.showcase-wrapper .clinic-basic-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.showcase-wrapper .clinic-basic-info .name-address {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.showcase-wrapper .clinic-basic-info .name-address p {
+  padding: 0px 20px;
+  font-size: 0.8em;
+  font-style: italic;
+  color: gray;
+}
+
+.showcase-wrapper .clinic-basic-info .name-address h2 {
+  padding: 0px 10px;
+}
+
+.showcase-wrapper .clinic-basic-info .name-address .divider {
+  background-color: gray;
+  width: 2px;
+  height: 1.5em;
+  align-self: baseline;
+}
+
+.showcase-wrapper .clinic-basic-info .rating-specialization {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 10px;
+  align-items: center;
+}
+
+.showcase-wrapper .clinic-basic-info .rating-specialization .specialization {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.showcase-wrapper .clinic-basic-info .rating-specialization .specialization li {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+.showcase-wrapper .clinic-basic-info .rating-specialization .rating {
+  font-size: 0.8em;
+}
+
+.showcase-wrapper .clinic-images {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.showcase-wrapper .clinic-images .main-image {
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.showcase-wrapper .clinic-images .image-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.showcase-wrapper .clinic-images .image-grid .showcase-image-wrapper {
+  width: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.showcase-wrapper .clinic-images .image-grid .showcase-image-wrapper img:hover {
+  opacity: 0.8;
+}
+
+.clinic-images img {
+  width: 100%;
+  cursor: pointer;
+}
+
+.info-wrapper .meta {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-wrapper .meta .certificates {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  padding: 50px 20px;
+}
+
+.info-wrapper .meta .certificates-display {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+
+.info-wrapper .meta .services {
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.info-wrapper .meta .services .service-list {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 10px;
+}
+
+.info-wrapper .meta .services .service-list li {
+  list-style-type: none;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.info-wrapper .meta .doctors-list {
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.info-wrapper .meta .doctors-list .doctor-info-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: none;
+  box-sizing: border-box;
+  padding: 15px;
+  max-height: 250px;
+  box-shadow: 0px 0px 3px 3px #e8e8e8;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.info-wrapper .meta .doctors-list .doctor-info-card:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.info-wrapper .meta .doctors-list .doctor-info-card .avatar-wrapper {
+  align-self: flex-start;
+  padding: 10px;
+}
+
+.info-wrapper .meta .doctors-list .doctor-info-card .doctor-info {
+  padding: 10px;
+}
+
+.info-wrapper .meta .doctors-list .doctor-info-card .doctor-info p {
+  margin: 0;
+}
+
+.info-wrapper .booking .booking-box {
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px 5px #e8e8e8;
+  position: sticky;
+  top: 150px;
+  right: 200px;
+}
+
+.info-wrapper .booking .booking-box .booking-form-submit-btn {
+  background-color: #61b15a;
+  color: white;
+  border-radius: 3px;
+  font-size: 1.2em;
+  padding: 10px 15px;
+  border: none;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.info-wrapper .booking .booking-box .booking-form-submit-btn:hover {
+  background-color: #ef4f4f;
+}
+
+.clinic-reviews .clinic-reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.clinic-reviews .clinic-reviews-wrapper .reviews-detail {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 50px;
+  grid-row-gap: 100px;
+}
+
+.clinic-reviews .clinic-reviews-wrapper .reviews-detail .reviews-card {
+  max-width: 500px;
+  transition: all 0.2s;
+  border-radius: 10px;
+  padding: 0px 30px;
+}
+
+.clinic-reviews .clinic-reviews-wrapper .reviews-detail .reviews-card:hover {
+  box-shadow: 0px 0px 5px 5px #e8e8e8;
+}
+
+.clinic-reviews
+  .clinic-reviews-wrapper
+  .reviews-detail
+  .reviews-card
+  .user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.clinic-reviews .clinic-reviews-wrapper button {
+  margin-top: 30px;
+  border: none;
+  padding: 10px 20px;
+  background: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.clinic-reviews .clinic-reviews-wrapper button:hover {
+  background: #ef4f4f;
+  color: white;
+}
+
+.booking .booking-box .booking-time-table {
+  width: 100%;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+button.booking-time-input,
+button.disabled,
+button.selected {
+  border: 1px solid #dddddd;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  transition: all 0.2s linear;
+  outline: none;
+}
+
+button.booking-time-input {
+  background: none;
+}
+
+button.booking-time-input:hover,
+button.selected {
+  background-color: #ef4f4f;
+  color: white;
+  border: 1px solid #ef4f4f;
+}
