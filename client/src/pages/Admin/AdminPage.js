@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import BookingContent from "./content/booking/BookingContent";
 import DashboardContent from "./content/dashboard/DashboardContent";
-import MessageContent from "./content/MessageContent";
 import TabPane from "./TabPane";
 
 import "../../style/AdminPage.css";

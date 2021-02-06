@@ -10,12 +10,19 @@ import screen from "../images/screen.png";
 const HomePage = () => {
   const reviews = useSelector((states) => states.reviews.reviews);
   const isLoading = useSelector((states) => states.reviews.isLoading);
+  const user = useSelector((state) => state.auth.user);
   const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(reviewsActions.getRandomReviews());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (user && user.isAdmin) {
+      history.replace("/admin");
+    }
+  }, [user]);
 
   const getReviewCardsList = () => {
     const cards = reviews.slice(0, 10).map((review) => (
