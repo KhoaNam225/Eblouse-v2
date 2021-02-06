@@ -16,7 +16,6 @@ function App() {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    console.log(accessToken);
     if (accessToken && accessToken !== "undefined") {
       dispatch(authActions.getCurrentUser(accessToken));
     } else {
