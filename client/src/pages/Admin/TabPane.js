@@ -1,5 +1,5 @@
 import React from "react";
-import { SHOW_BOOKING, SHOW_DASHBOARD, SHOW_MESSAGE } from "./AdminPage";
+import { SHOW_BOOKING, SHOW_DASHBOARD } from "./AdminPage";
 
 const TabPane = ({ showMode, setShowMode }) => {
   return (
@@ -19,14 +19,6 @@ const TabPane = ({ showMode, setShowMode }) => {
         onClick={() => setShowMode(SHOW_BOOKING)}
       >
         Booking
-      </div>
-      <div
-        className={
-          showMode === SHOW_MESSAGE ? "tab-item selected-tab" : "tab-item"
-        }
-        onClick={() => setShowMode(SHOW_MESSAGE)}
-      >
-        Message
       </div>
     </div>
   );

@@ -262,6 +262,10 @@ const ClinicReview = ({ clinic }) => {
                 year: "numeric",
               })}
             </p>
+            <p style={{ padding: "0px", margin: 0, fontSize: "0.8em" }}>
+              <i style={{ color: "#fdb827" }} className="fas fa-star"></i>
+              {" " + review.rating}
+            </p>
           </div>
         </div>
         <div className="review-content">
@@ -319,7 +323,7 @@ const ClinicDetailPage = () => {
 
   useEffect(() => {
     dispatch(clinicsActions.getClinic(clinicId));
-  }, [dispatch]);
+  }, [dispatch, clinicId]);
 
   const sectionStyle = {
     borderTop: "2px solid #dfe0df",

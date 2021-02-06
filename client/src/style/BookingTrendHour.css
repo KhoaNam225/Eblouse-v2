@@ -1,0 +1,23 @@
+.booking-trend-hour-wrapper {
+  margin-top: 20px;
+  margin-left: 20px;
+  padding: 50px 50px 50px 0px;
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px 2px #d3e0ea;
+}
+
+.booking-trend-hour-wrapper .svg-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.booking-trend-hour-wrapper .svg-container .d3-canvas .arc {
+  transition: all 0.2s;
+}
+
+.booking-trend-hour-wrapper .svg-container .d3-canvas .arc:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}

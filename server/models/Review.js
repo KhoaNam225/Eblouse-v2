@@ -20,13 +20,6 @@ reviewSchema.statics.calculateReviews = async function (clinicId) {
 };
 //  this function below is calculating the RATING of REVIEWS
 reviewSchema.statics.calculateAvgRating = async function (clinicId) {
-  // const reviews = await this.find({ clinic: clinicId });
-  // let sum = 0;
-  // for (let i = 0; i < reviews.length; i++) {
-  //   sum += Number.parseInt(reviews[i].rating);
-  // }
-
-  // await Clinic.findByIdAndUpdate(clinicId, { ratingSum: sum });
   const stats = await this.aggregate([
     { $match: { clinic: clinicId } },
     {
