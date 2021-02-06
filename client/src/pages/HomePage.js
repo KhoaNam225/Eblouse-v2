@@ -18,7 +18,7 @@ const HomePage = () => {
   }, [dispatch]);
 
   const getReviewCardsList = () => {
-    const cards = reviews.map((review) => (
+    const cards = reviews.slice(0, 10).map((review) => (
       <ReviewCard
         avatar={review.user.avatarUrl}
         clinicName={review.clinic.name}

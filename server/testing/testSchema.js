@@ -262,7 +262,7 @@ const createRandomReview = async (users, clinics) => {
     const reviews = [];
     for (let index = 0; index < clinics.length; index++) {
       let clinic = clinics[index];
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 100; i++) {
         let user = users[getRandomInt(0, users.length - 1)];
         console.log(
           `Creating review for user ${user._id} and clinic ${clinic._id}`
@@ -287,7 +287,6 @@ const createRandomReview = async (users, clinics) => {
 };
 
 const createRandomBooking = async (users, clinics) => {
-  console.log("hahdud", users);
   try {
     console.log("CREATING 10 BOOKINGS FOR EACH CLINIC");
     console.log("------------------------------");
@@ -298,7 +297,7 @@ const createRandomBooking = async (users, clinics) => {
       let clinic = clinics[index];
       let doctors = clinic.doctors;
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 100; i++) {
         let userIndex = getRandomInt(0, users.length - 1);
         let user = users[userIndex];
 
@@ -312,32 +311,18 @@ const createRandomBooking = async (users, clinics) => {
         let endTime = null;
         let stat = null;
 
-        switch (i) {
-          case 0:
-          case 1:
-            startTime = faker.date.past();
-            stat = "Done";
-            break;
-
-          case 2:
-          case 3:
-          case 8:
-            startTime = faker.date.soon(3, new Date());
-            stat = "Pending";
-            break;
-
-          case 4:
-          case 5:
-          case 9:
-            startTime = faker.date.soon(3, new Date());
-            stat = "Accepted";
-            break;
-
-          case 6:
-          case 7:
-            startTime = faker.date.soon(3, new Date());
-            stat = "Cancelled";
-            break;
+        if (i >= 0 && i < 40) {
+          startTime = faker.date.between("2020-09-01", new Date());
+          stat = "Done";
+        } else if (i >= 40 && i < 50) {
+          startTime = faker.date.soon(5, new Date());
+          stat = "Pending";
+        } else if (i >= 50 && i < 85) {
+          startTime = faker.date.soon(3, new Date());
+          stat = "Accepted";
+        } else {
+          startTime = faker.date.between("2021-01-01", new Date());
+          stat = "Cancelled";
         }
 
         if (getRandomInt(0, 1) == 0) {
@@ -418,4 +403,4 @@ const main = async (genData = false) => {
   // console.log(JSON.stringify(booking, null, 2));
 };
 
-// main(true);
+//main(true);

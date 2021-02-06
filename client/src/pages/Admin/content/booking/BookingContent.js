@@ -37,8 +37,8 @@ const BookingContent = () => {
             <div
               className={
                 showMode === APPROVED_BOOKING
-                  ? "booking-menu-item selected-booking-mode"
-                  : "booking-menu-item"
+                  ? "admin-menu-item selected-admin-mode"
+                  : "admin-menu-item"
               }
               onClick={() => setShowMode(APPROVED_BOOKING)}
             >
@@ -47,8 +47,8 @@ const BookingContent = () => {
             <div
               className={
                 showMode === PENDING_BOOKING
-                  ? "booking-menu-item selected-booking-mode"
-                  : "booking-menu-item"
+                  ? "admin-menu-item selected-admin-mode"
+                  : "admin-menu-item"
               }
               onClick={() => setShowMode(PENDING_BOOKING)}
             >
@@ -57,8 +57,8 @@ const BookingContent = () => {
             <div
               className={
                 showMode === CANCELLED_BOOKING
-                  ? "booking-menu-item selected-booking-mode"
-                  : "booking-menu-item"
+                  ? "admin-menu-item selected-admin-mode"
+                  : "admin-menu-item"
               }
               onClick={() => setShowMode(CANCELLED_BOOKING)}
             >
@@ -67,8 +67,8 @@ const BookingContent = () => {
             <div
               className={
                 showMode === COMPLETED_BOOKING
-                  ? "booking-menu-item selected-booking-mode"
-                  : "booking-menu-item"
+                  ? "admin-menu-item selected-admin-mode"
+                  : "admin-menu-item"
               }
               onClick={() => setShowMode(COMPLETED_BOOKING)}
             >

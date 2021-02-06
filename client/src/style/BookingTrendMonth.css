@@ -1,0 +1,94 @@
+.booking-trend-month-wrapper {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+
+.booking-trend-month-wrapper .insight-boxes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.booking-trend-month-wrapper .insight-boxes .insight-box {
+  box-shadow: 0px 0px 10px 2px #d3e0ea;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.booking-trend-month-wrapper .insight-boxes .insight-box p {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+.booking-trend-month-wrapper .insight-boxes .insight-box .title {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.booking-trend-month-wrapper .insight-boxes .insight-box .booking-num-growth,
+.booking-trend-month-wrapper .insight-boxes .insight-box .percent-growth {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.booking-trend-month-wrapper .insight-boxes .insight-box .booking-num-growth {
+  color: #ef4f4f;
+}
+
+.booking-trend-month-wrapper .svg-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 20px;
+  margin-left: 20px;
+  padding: 50px 50px 0px 50px;
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px 2px #d3e0ea;
+}
+
+.booking-trend-month-wrapper .svg-container .month-booking-bars {
+  fill: #0278ae;
+}
+
+.booking-trend-month-wrapper .svg-container .month-booking-bars:hover {
+  fill: #f05454;
+}
+
+.booking-trend-month-wrapper .svg-container .x-axis g.tick {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.booking-trend-month-wrapper .svg-container .y-axis g.tick {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #f05454;
+}
+
+.booking-trend-month-wrapper .svg-container .y-axis .domain,
+.booking-trend-month-wrapper .svg-container .x-axis .domain {
+  color: #cdd0cb;
+}
+
+#tooltip {
+  position: fixed;
+  z-index: 10;
+  background-color: #00bcd4;
+  padding: 5px 15px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 2px #d3e0ea;
+}
+
+#tooltip p {
+  margin: 0;
+  padding: 4px;
+  color: white;
+}

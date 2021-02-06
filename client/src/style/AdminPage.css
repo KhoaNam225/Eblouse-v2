@@ -28,7 +28,7 @@
   padding: 10px 10rem;
 }
 
-.booking-menu-item {
+.admin-menu-item {
   padding: 15px 15px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -36,15 +36,15 @@
   cursor: pointer;
 }
 
-.booking-menu-item:hover {
+.admin-menu-item:hover {
   background-color: rgba(235, 235, 235, 0.5);
 }
 
-.booking-menu-item p {
+.admin-menu-item p {
   margin: 0;
 }
 
-.selected-booking-mode {
+.selected-admin-mode {
   background-color: #f05454 !important;
   color: white !important;
   font-weight: bold !important;

@@ -6,6 +6,13 @@ import { toast } from "react-toastify";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import bookingsActions from "../../redux/actions/bookings.actions";
 
+const getMinAvailableDate = () => {
+  let currDate = new Date();
+  currDate.setDate(currDate.getDate() + 1);
+
+  return currDate;
+};
+
 const BookingTimeTable = ({
   doctorId,
   bookingsList,
@@ -143,7 +150,7 @@ const BookingTimeTable = ({
 const BookingCreateForm = ({ doctors, clinicId }) => {
   const [selectedDoctor, setSelectedDoctor] = useState(doctors[0]._id);
   const [visitReason, setVisitReason] = useState("");
-  const [bookingDate, setBookingDate] = useState(new Date());
+  const [bookingDate, setBookingDate] = useState(getMinAvailableDate());
   const [startTime, setStartTime] = useState(0);
 
   const dispatch = useDispatch();
@@ -239,7 +246,7 @@ const BookingCreateForm = ({ doctors, clinicId }) => {
               <Form.Row>
                 <Form.Control
                   type="date"
-                  min={new Date().toISOString().split("T")[0]}
+                  min={getMinAvailableDate().toISOString().split("T")[0]}
                   value={bookingDate.toISOString().split("T")[0]}
                   onChange={handleDateChange}
                   className="booking-date-input"
