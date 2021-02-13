@@ -14,6 +14,7 @@ const FullNavBar = ({
   setShowFullClicked,
   handleShowModal,
   onSubmit,
+  specializations,
 }) => {
   const BOOKING_SEARCH_MODE = 1;
   const REVIEWS_SEARCH_MODE = 2;
@@ -57,6 +58,7 @@ const FullNavBar = ({
               specQuery={specQuery}
               setSpecQuery={setSpecQuery}
               onSubmit={onSubmit}
+              specializations={specializations}
             />
           ) : (
             <ReviewsSearchBar />

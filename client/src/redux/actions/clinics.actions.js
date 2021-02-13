@@ -25,11 +25,9 @@ const getSearchCategory = (query = null) => async (dispatch) => {
 
     const res = await api.get(`clinic/search?${queryString}`);
 
-    console.log(res.data.data);
-
     dispatch({ type: types.CLINIC_SUCCESS, payload: res.data.data });
   } catch (error) {
-    dispatch({ type: types.CLINIC_FAILURE, payload: error });
+    dispatch({ type: types.CLINIC_FAILURE, payload: null });
   }
 };
 

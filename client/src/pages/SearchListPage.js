@@ -14,7 +14,6 @@ const SearchListPage = () => {
   const listClinic = useSelector((state) => state.clinics.listClinic);
   const isLoading = useSelector((state) => state.clinics.isLoading);
 
-  const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams();
   const query = params.query;
@@ -32,13 +31,12 @@ const SearchListPage = () => {
           <Col md={3}></Col>
           <Col md={7}>
             <div className="search-list">
-              <section>
+              <section className="info-updated-wrapper">
                 <div className="info-updated">
-                  <ul className="list-unstyled">
-                    <li>More than ... clinics nearby you</li>
-                    <li>Date:</li>
-                    <li>...: patients</li>
-                  </ul>
+                  <p>
+                    There are <span>{listClinic.length}</span> clinics nearby
+                    you
+                  </p>
                 </div>
               </section>
               <section className="list-of-clinics">

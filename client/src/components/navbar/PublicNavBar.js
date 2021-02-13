@@ -9,7 +9,7 @@ import UserDetailInputForm from "./UserDetailInputForm";
 import logo from "../../images/ebloue-logo.png";
 import "../../style/PublicNavBar.css";
 
-const PublicNavBar = () => {
+const PublicNavBar = ({ specializations }) => {
   const [specQuery, setSpecQuery] = useState("");
   const [showFullClicked, setShowFullClicked] = useState(false);
   const [scrollOffsetY, setScrollOffsetY] = useState(0);
@@ -45,7 +45,7 @@ const PublicNavBar = () => {
   };
 
   const handleSearchSpec = () => {
-    history.replace(`/search/${encodeURIComponent(specQuery)}`);
+    history.push(`/search/${encodeURIComponent(specQuery)}`);
   };
 
   useEffect(() => {
@@ -81,6 +81,7 @@ const PublicNavBar = () => {
           setShowFullClicked={setShowFullClicked}
           handleShowModal={handleShowModal}
           onSubmit={handleSearchSpec}
+          specializations={specializations}
         />
       )}
 

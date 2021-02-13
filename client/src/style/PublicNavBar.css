@@ -163,7 +163,8 @@
   margin: 0;
 }
 
-.search-component > input {
+.search-component > input,
+.search-component > select {
   border: none;
   outline: none;
   background: none;

@@ -5,7 +5,7 @@ const {
 } = require("../helpers/utils.helper");
 const Clinic = require("../models/Clinic");
 const Review = require("../models/Review");
-const Doctor = require("../models/Doctor");
+const Specialization = require("../models/Specialization");
 const Booking = require("../models/Booking");
 const userController = require("./user.controller");
 const User = require("../models/User");
@@ -139,6 +139,18 @@ clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
     .populate("user");
 
   return sendResponse(res, 200, true, bookingRelate, null, null);
+});
+
+clinicController.getAllSpecializations = catchAsync(async (req, res, next) => {
+  let specializations = await Specialization.find({});
+  return sendResponse(
+    res,
+    200,
+    true,
+    specializations,
+    null,
+    "get all specializations success"
+  );
 });
 
 module.exports = clinicController;

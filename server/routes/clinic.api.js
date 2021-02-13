@@ -13,13 +13,7 @@ const validators = require("../middlewares/validator");
 
 router.get("/search", clinicController.getSearchCategory);
 
-/**
- * @route GET api/clinic?page=1&limit=10&q=:category
- * @description Get clinics with limit, page and query
- * @access Public
- */
-
-router.get("/", clinicController.getListOfClinic);
+router.get("/specs", clinicController.getAllSpecializations);
 
 /**
  * @route GET api/clinic/:id
@@ -32,5 +26,13 @@ router.get(
   validators.validate([param("id").exists().custom(validators.checkObjectId)]),
   clinicController.getSingleClinic
 );
+
+/**
+ * @route GET api/clinic?page=1&limit=10&q=:category
+ * @description Get clinics with limit, page and query
+ * @access Public
+ */
+
+router.get("/", clinicController.getListOfClinic);
 
 module.exports = router;

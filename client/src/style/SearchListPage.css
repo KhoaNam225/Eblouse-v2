@@ -9,10 +9,21 @@ hr {
 }
 .all {
   display: flex;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  border: grey !important;
+  flex-direction: row;
+  justify-content: center;
+  padding: 30px 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 2px #dddddd;
+  transition: all 0.2s;
+  background-color: white;
 }
+
+.all:hover {
+  transform: scale(1.05);
+}
+
 .short-line {
   width: 50%;
 }
@@ -45,6 +56,14 @@ hr {
   position: relative;
   width: 100%;
 }
+
+.information .list-service {
+  padding: 0;
+}
+
+.information .list-service li {
+  margin-right: 2em;
+}
 span {
   margin-left: 5px;
 }
@@ -66,4 +85,26 @@ span {
   justify-content: center;
   flex-direction: column;
   margin-bottom: 15px;
+}
+
+.search-list .info-updated-wrapper .info-updated {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 2px #dddddd;
+}
+
+.search-list .info-updated-wrapper .info-updated p {
+  margin: 0;
+  text-align: center;
+}
+
+.search-list .info-updated-wrapper .info-updated p span {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #f05454;
+}
+
+.search-list .list-of-clinics {
+  margin-top: 2rem;
 }

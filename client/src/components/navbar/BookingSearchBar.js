@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
-import clinicsActions from "../../redux/actions/clinics.actions";
+import React from "react";
 
 const BookingSearchBar = ({
   date,
   specQuery,
   setSpecQuery,
   peopleNum,
-  // copy boookingsearchbar, fullnavbar, publicnavbar, cliniccontroller
   onSubmit,
+  specializations,
 }) => {
   return (
     <div className="search-box">
@@ -27,14 +24,20 @@ const BookingSearchBar = ({
           }}
         >
           <label>Specializations</label>
-          <input
-            type="text"
+          <select
             value={specQuery}
-            placeholder="specialization"
+            placeholder="Specialization"
             onChange={(e) => {
               setSpecQuery(e.target.value);
             }}
-          />
+          >
+            <option value="" disabled selected>
+              Choose a specialization
+            </option>
+            {specializations.map((spec) => (
+              <option>{spec.name}</option>
+            ))}
+          </select>
         </div>
         <div className="split-bar"></div>
         <div

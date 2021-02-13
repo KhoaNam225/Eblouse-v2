@@ -12,7 +12,11 @@ const BRCarousel = ({ images }) => {
     <Carousel className="change-size" onSelect={handleSelect}>
       {images.map((image) => (
         <Carousel.Item>
-          <img src={image} className="d-block w-100" />
+          <img
+            src={image}
+            className="d-block w-100"
+            style={{ borderRadius: "15px" }}
+          />
         </Carousel.Item>
       ))}
     </Carousel>
