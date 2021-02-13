@@ -9,12 +9,16 @@ const userSchema = Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     avatarUrl: { type: String, required: false },
-    //isDeleted: { type: Boolean, default: false, select: false },
+    gender: { type: String, enum: ["Male", "Female", "Other"] },
+    blood: {
+      type: String,
+      enum: ["A+", "B+", "O+", "AB+", "A-", "B-", "O-", "AB-"],
+    },
+    passportNum: { type: String },
+    job: { type: String },
   },
   { timestamp: true }
 );
-
-//userSchema.plugin(require("./plugins/isDeletedFalse"));
 
 userSchema.methods.generateToken = async function () {
   const accessToken = await jwt.sign({ _id: this._id }, JWT_SECRET_KEY, {

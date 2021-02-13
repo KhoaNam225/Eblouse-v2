@@ -16,6 +16,7 @@ import AdminPage from "../pages/Admin/AdminPage";
 
 import "../style/main.css";
 import { Container } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const PublicLayout = () => {
   return (
