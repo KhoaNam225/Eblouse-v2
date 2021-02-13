@@ -9,8 +9,11 @@ const FullNavBar = ({
   isLoading,
   scrollOffsetY,
   logo,
+  specQuery,
+  setSpecQuery,
   setShowFullClicked,
   handleShowModal,
+  onSubmit,
 }) => {
   const BOOKING_SEARCH_MODE = 1;
   const REVIEWS_SEARCH_MODE = 2;
@@ -50,7 +53,11 @@ const FullNavBar = ({
             ) : null}
           </div>
           {searchMode === BOOKING_SEARCH_MODE ? (
-            <BookingSearchBar />
+            <BookingSearchBar
+              specQuery={specQuery}
+              setSpecQuery={setSpecQuery}
+              onSubmit={onSubmit}
+            />
           ) : (
             <ReviewsSearchBar />
           )}

@@ -15,8 +15,27 @@ const getClinic = (clinicId) => async (dispatch) => {
   }
 };
 
+const getSearchCategory = (query = null) => async (dispatch) => {
+  dispatch({ type: types.CLINIC_REQUEST, payload: null });
+  try {
+    let queryString = "";
+    if (query) {
+      queryString = `specialization=${encodeURIComponent(query)}`;
+    }
+
+    const res = await api.get(`clinic/search?${queryString}`);
+
+    console.log(res.data.data);
+
+    dispatch({ type: types.CLINIC_SUCCESS, payload: res.data.data });
+  } catch (error) {
+    dispatch({ type: types.CLINIC_FAILURE, payload: error });
+  }
+};
+
 const clinicsActions = {
   getClinic,
+  getSearchCategory,
 };
 
 export default clinicsActions;

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
+import clinicsActions from "../../redux/actions/clinics.actions";
 
 const BookingSearchBar = ({
-  clinicName,
-  setClinicName,
   date,
-  setDate,
+  specQuery,
+  setSpecQuery,
   peopleNum,
-  setPeopleNum,
+  // copy boookingsearchbar, fullnavbar, publicnavbar, cliniccontroller
   onSubmit,
 }) => {
   return (
@@ -24,8 +26,15 @@ const BookingSearchBar = ({
             box.classList.remove("right-shadow-box");
           }}
         >
-          <label>Location</label>
-          <input type="text" value={clinicName} placeholder="Clinic name" />
+          <label>Specializations</label>
+          <input
+            type="text"
+            value={specQuery}
+            placeholder="specialization"
+            onChange={(e) => {
+              setSpecQuery(e.target.value);
+            }}
+          />
         </div>
         <div className="split-bar"></div>
         <div
