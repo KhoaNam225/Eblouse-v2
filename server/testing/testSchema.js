@@ -113,6 +113,8 @@ const createRandomUsers = async (userNum) => {
   try {
     console.log(`CREATING ${userNum} RANDOM USERS`);
     console.log("--------------------------");
+    const blood = ["A+", "B+", "O+", "AB+", "A-", "B-", "O-", "AB-"];
+    const gender = ["Male", "Female", "Other"];
     const users = [];
     for (let i = 0; i < userNum; i++) {
       const salt = await bcrypt.genSalt(10);
@@ -122,6 +124,10 @@ const createRandomUsers = async (userNum) => {
         email: faker.internet.email().toLowerCase(),
         password: password,
         avatarUrl: faker.image.food(),
+        blood: blood[getRandomInt(0, blood.length - 1)],
+        gender: gender[getRandomInt(0, gender.length - 1)],
+        passportNum: faker.random.uuid(),
+        job: faker.lorem.word(),
       });
 
       console.log(`Created user ${user._id}`);
@@ -239,6 +245,8 @@ const createRandomClinic = async (
         specializations: specs,
         services: svs,
         doctors: docs,
+        latitude: faker.address.latitude(),
+        longitude: faker.address.longitude(),
       });
 
       console.log(`Created clinic ${clinic._id}`);
@@ -403,4 +411,4 @@ const main = async (genData = false) => {
   // console.log(JSON.stringify(booking, null, 2));
 };
 
-//main(true);
+// main(true);

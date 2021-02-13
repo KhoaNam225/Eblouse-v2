@@ -25,6 +25,8 @@ const clinicSchema = Schema({
   services: [{ type: Schema.Types.ObjectId, ref: "Service" }],
   doctors: [{ type: Schema.Types.ObjectId, ref: "Doctor" }],
   avgRating: { type: Number, default: 0 },
+  latitude: { type: String, required: true },
+  longitude: { type: String, required: true },
 });
 
 clinicSchema.methods.generateToken = async function () {
