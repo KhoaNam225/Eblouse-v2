@@ -4,6 +4,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import authActions from "./redux/actions/auth.actions";
+import specsActions from "./redux/actions/specializations.actions";
 import AlertMsg from "./components/AlertMsg";
 import PublicLayout from "./routers/PublicLayout";
 import AdminLayout from "./routers/AdminLayout";
@@ -22,6 +23,10 @@ function App() {
       dispatch(authActions.logout());
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(specsActions.getAllSpecializations());
+  }, []);
 
   if (isAuthenticated === null)
     return <LoadingSpinner color="red" animation="border" />;

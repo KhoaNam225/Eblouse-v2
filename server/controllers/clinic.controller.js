@@ -5,7 +5,7 @@ const {
 } = require("../helpers/utils.helper");
 const Clinic = require("../models/Clinic");
 const Review = require("../models/Review");
-const Doctor = require("../models/Doctor");
+const Specialization = require("../models/Specialization");
 const Booking = require("../models/Booking");
 const userController = require("./user.controller");
 const User = require("../models/User");
@@ -14,27 +14,21 @@ const { findById } = require("../models/Clinic");
 const clinicController = {};
 
 clinicController.getSearchCategory = catchAsync(async (req, res, next) => {
-  let query = req.body.query;
-  let clinicList = await Clinic.find({}).populate("specializations");
-
-  clinicList = clinicList.filter(function (clinic) {
+  let { specialization } = { ...req.query };
+  specialization = decodeURIComponent(specialization);
+  let allClinics = await Clinic.find()
+    .populate("specializations")
+    .populate("services");
+  let clinics = allClinics.filter((clinic) => {
     let specs = clinic.specializations;
+
     for (let i = 0; i < specs.length; i++) {
-      if (specs[i].name == query) return true;
+      if (specs[i].name.toLowerCase() === specialization.toLowerCase())
+        return true;
     }
     return false;
   });
-
-  if (!clinicList)
-    return next(new AppError(404, "Sepecialization not found", "Query Error"));
-  return sendResponse(
-    res,
-    200,
-    true,
-    { query, clinicList },
-    null,
-    "Query success"
-  );
+  return sendResponse(res, 200, true, clinics, null, "");
 });
 
 //  user can get detail of clinic
@@ -145,6 +139,18 @@ clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
     .populate("user");
 
   return sendResponse(res, 200, true, bookingRelate, null, null);
+});
+
+clinicController.getAllSpecializations = catchAsync(async (req, res, next) => {
+  let specializations = await Specialization.find({});
+  return sendResponse(
+    res,
+    200,
+    true,
+    specializations,
+    null,
+    "get all specializations success"
+  );
 });
 
 module.exports = clinicController;

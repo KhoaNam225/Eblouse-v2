@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 import clinicsActions from "../redux/actions/clinics.actions";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -319,7 +320,7 @@ const ClinicDetailPage = () => {
   const clinicId = params.id;
 
   const clinic = useSelector((state) => state.clinics.clinic);
-  const isLoading = useSelector((state) => state.clinics.isLoading);
+  const isClinicLoading = useSelector((state) => state.clinics.isLoading);
 
   useEffect(() => {
     dispatch(clinicsActions.getClinic(clinicId));
@@ -330,8 +331,8 @@ const ClinicDetailPage = () => {
     padding: "20px 0px",
   };
 
-  return isLoading ? (
-    <LoadingSpinner animation="border" color="success" />
+  return isClinicLoading ? (
+    <LoadingSpinner animation="border" color="danger" />
   ) : (
     <div className="wrapper">
       <section style={sectionStyle} className="clinic-showcase">
@@ -345,6 +346,27 @@ const ClinicDetailPage = () => {
       </section>
       <section className="clinic-map" style={sectionStyle}>
         <h2 style={{ textAlign: "center" }}>Our Location</h2>
+        <div id="map-container">
+          <MapContainer
+            center={[10.780060498405208, 106.69902603952619]}
+            zoom={25}
+            scrollWheelZoom={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[10.780060498405208, 106.69902603952619]}>
+              <Popup>
+                <span style={{ fontWeight: "bold", fontSize: "1.5em" }}>
+                  {clinic ? clinic.name : "Clinic Name"}
+                </span>
+                <br />
+                <p>{clinic ? clinic.address : "Clinic Address"}</p>
+              </Popup>
+            </Marker>
+          </MapContainer>
+        </div>
       </section>
     </div>
   );

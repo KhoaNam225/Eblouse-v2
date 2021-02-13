@@ -19,17 +19,20 @@ import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const PublicLayout = () => {
+  const specializations = useSelector(
+    (state) => state.specializations.specializations
+  );
+
   return (
     <>
-      <PublicNavBar />
+      <PublicNavBar specializations={specializations} />
       <Container style={{ padding: 0 }} fluid>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/info" component={InformationPage} />
           <Route exact path="/clinic/:id" component={ClinicDetailPage} />
-          {/* <Route exac path="/search" component={SearchListPage} /> */}
-          <Route exact path="/login/clinic" component={ClinicLoginPage} />
+          <Route exac path="/search/:query" component={SearchListPage} />
           <PrivateRoute
             exact
             path="/booking/:id"

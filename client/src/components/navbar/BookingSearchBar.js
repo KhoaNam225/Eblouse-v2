@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 
 const BookingSearchBar = ({
-  clinicName,
-  setClinicName,
   date,
-  setDate,
+  specQuery,
+  setSpecQuery,
   peopleNum,
-  setPeopleNum,
   onSubmit,
+  specializations,
 }) => {
   return (
     <div className="search-box">
@@ -24,8 +23,21 @@ const BookingSearchBar = ({
             box.classList.remove("right-shadow-box");
           }}
         >
-          <label>Location</label>
-          <input type="text" value={clinicName} placeholder="Clinic name" />
+          <label>Specializations</label>
+          <select
+            value={specQuery}
+            placeholder="Specialization"
+            onChange={(e) => {
+              setSpecQuery(e.target.value);
+            }}
+          >
+            <option value="" disabled selected>
+              Choose a specialization
+            </option>
+            {specializations.map((spec) => (
+              <option>{spec.name}</option>
+            ))}
+          </select>
         </div>
         <div className="split-bar"></div>
         <div

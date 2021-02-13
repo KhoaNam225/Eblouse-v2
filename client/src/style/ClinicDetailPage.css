@@ -283,3 +283,19 @@ button.selected {
   color: white;
   border: 1px solid #ef4f4f;
 }
+
+.clinic-map #map-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 500px;
+}
+
+.clinic-map #map-container .leaflet-container {
+  height: 100%;
+  width: 80%;
+  z-index: 0;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px 2px #dddddd;
+}

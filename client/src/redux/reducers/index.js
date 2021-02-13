@@ -4,6 +4,7 @@ import clinicsReducer from "./clinics.reducers";
 import usersReducer from "./users.reducres";
 import authReducer from "./auth.reducers";
 import bookingsReducer from "./bookings.reducers";
+import specsReducer from "./specializations.reducers";
 
 export default combineReducers({
   reviews: reviewsReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   users: usersReducer,
   auth: authReducer,
   bookings: bookingsReducer,
+  specializations: specsReducer,
 });
