@@ -42,6 +42,7 @@ const createNewReview = (clinicId, userId, reviewText, rating) => async (
       rating: rating,
     });
     dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res.data.data });
+    toast.success("Created your review! :)");
   } catch (error) {
     console.log(error);
     dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: error });
