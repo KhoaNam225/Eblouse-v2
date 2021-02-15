@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+/**
+ * Author: Khoa Nam Pham
+ * File name: AdminNavBar.js
+ * Last Modified Date: 15/2/2021
+ * Purpose:   This component is used to display the Navbar for Admin User.
+ */
+import React from "react";
 import { Nav } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import logo from "../../images/ebloue-logo.png";
-import authActions from "../../redux/actions/auth.actions";
 import UserInfoButton from "./UserInfoButton";
 
 import "../../style/AdminNavBar.css";
 
+/**
+ * The Navigation Bar for users who are Admins of clinics
+ */
 const AdminNavBar = () => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user); // Current user infor
   const isLoading = useSelector((state) => state.auth.loading);
 
   return (
