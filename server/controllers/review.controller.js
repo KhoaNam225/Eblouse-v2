@@ -8,22 +8,23 @@ const Review = require("../models/Review");
 const reviewController = {};
 
 reviewController.createNewReview = catchAsync(async (req, res, next) => {
-  // const userId = req.params.userId;
   const clinicId = req.params.id;
-  const { content } = req.body;
-  console.log(content, "huhhihihih");
+
+  const { userId, content, rating } = req.body;
+  console.log("chekc urser id", userId);
   const clinic = await Clinic.findById(clinicId);
-  console.log("clinic ne:", clinic);
+
   if (!clinic)
     return next(
       new AppError(404, "Clinic not found", "Create new Review Error")
     );
   let review = await Review.create({
-    // user: userId,
+    user: userId,
     clinic: clinicId,
     content,
+    rating,
   });
-  review = await review.populate("clinic").execPopulate();
+  review = await review.populate("clinic").populate("user").execPopulate();
   return sendResponse(
     res,
     200,

@@ -7,6 +7,7 @@ import clinicsActions from "../redux/actions/clinics.actions";
 import LoadingSpinner from "../components/LoadingSpinner";
 import BookingCreateForm from "./Clinic/BookingCreateForm";
 import { MultiItemsCarousel } from "../components/Carousel";
+import ClinicReview from "../components/ClinicReview";
 
 import "../style/ClinicDetailPage.css";
 
@@ -218,121 +219,40 @@ const ClinicInfo = ({ clinic }) => {
   );
 };
 
-const ClinicReview = ({ clinic }) => {
-  const { avgRating, reviews } = clinic;
-  const [reviewsNum, setReviewsNum] = useState(4);
-
-  const ReviewCard = ({ review }) => {
-    return (
-      <div className="reviews-card">
-        <div
-          className="user-info"
-          style={{ paddingTop: 20, paddingBottom: 20 }}
-        >
-          <div className="avatar-wrapper">
-            <img
-              src={review.user.avatarUrl}
-              alt="user avatar"
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: "50%",
-              }}
-            />
-          </div>
-          <div className="user-detail" style={{ padding: "10px 20px" }}>
-            <p
-              style={{
-                margin: 0,
-                fontSize: "1.1em",
-                fontWeight: "bold",
-              }}
-            >
-              {`${review.user.name}`}
-            </p>
-            <p
-              style={{
-                margin: 0,
-                fontSize: "0.8em",
-                color: "grey",
-                fontStyle: "italic",
-              }}
-            >
-              {new Date().toLocaleDateString(undefined, {
-                month: "long",
-                year: "numeric",
-              })}
-            </p>
-            <p style={{ padding: "0px", margin: 0, fontSize: "0.8em" }}>
-              <i style={{ color: "#fdb827" }} className="fas fa-star"></i>
-              {" " + review.rating}
-            </p>
-          </div>
-        </div>
-        <div className="review-content">
-          <p
-            style={{
-              fontSize: "0.9em",
-              fontWeight: 200,
-            }}
-          >
-            {review.content}
-          </p>
-        </div>
-      </div>
-    );
-  };
-
-  const getReviewCards = (reviewsNum = 4) => {
-    return reviews
-      .slice(0, reviewsNum)
-      .map((review, index) => <ReviewCard key={index} review={review} />);
-  };
-
-  const handleShowMore = () => {
-    if (reviewsNum < reviews.length) {
-      setReviewsNum(reviewsNum * 4);
-    }
-  };
-
-  return (
-    <div className="clinic-reviews-wrapper">
-      <div className="header" style={{ paddingBottom: "50px" }}>
-        <h2>
-          <i
-            style={{ color: "#fdb827", marginRight: "0.5em" }}
-            className="fas fa-star"
-          ></i>
-          {`${avgRating} - Patient Reviews`}
-        </h2>
-      </div>
-      <div className="reviews-detail">{getReviewCards(reviewsNum)}</div>
-      {reviewsNum < reviews.length ? (
-        <button onClick={() => handleShowMore()}>Show More</button>
-      ) : null}
-    </div>
-  );
-};
-
 const ClinicDetailPage = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const clinicId = params.id;
 
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(null);
+
   const clinic = useSelector((state) => state.clinics.clinic);
-  const isClinicLoading = useSelector((state) => state.clinics.isLoading);
+  const isLoading = useSelector((state) => state.clinics.isLoading);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     dispatch(clinicsActions.getClinic(clinicId));
-  }, [dispatch, clinicId]);
+  }, [dispatch]);
 
   const sectionStyle = {
     borderTop: "2px solid #dfe0df",
     padding: "20px 0px",
   };
+  const handleInputReviewChange = (e) => {
+    setReviewText(e.target.value);
+  };
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+    dispatch(
+      clinicsActions.createNewReview(clinicId, user._id, reviewText, rating)
+    );
+    setReviewText("");
+    setRating(null);
+  };
 
-  return isClinicLoading ? (
-    <LoadingSpinner animation="border" color="danger" />
+  return isLoading ? (
+    <LoadingSpinner animation="border" color="success" />
   ) : (
     <div className="wrapper">
       <section style={sectionStyle} className="clinic-showcase">
@@ -342,7 +262,17 @@ const ClinicDetailPage = () => {
         {clinic ? <ClinicInfo clinic={clinic} /> : null}
       </section>
       <section className="clinic-reviews" style={sectionStyle}>
-        {clinic ? <ClinicReview clinic={clinic} /> : null}
+        {clinic ? (
+          <ClinicReview
+            clinic={clinic}
+            reviewText={reviewText}
+            setReviewText={setReviewText}
+            rating={rating}
+            setRating={setRating}
+            handleInputReviewChange={handleInputReviewChange}
+            handleSubmitReview={handleSubmitReview}
+          />
+        ) : null}
       </section>
       <section className="clinic-map" style={sectionStyle}>
         <h2 style={{ textAlign: "center" }}>Our Location</h2>
