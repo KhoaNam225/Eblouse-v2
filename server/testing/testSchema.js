@@ -270,7 +270,7 @@ const createRandomReview = async (users, clinics) => {
     const reviews = [];
     for (let index = 0; index < clinics.length; index++) {
       let clinic = clinics[index];
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 5; i++) {
         let user = users[getRandomInt(0, users.length - 1)];
         console.log(
           `Creating review for user ${user._id} and clinic ${clinic._id}`

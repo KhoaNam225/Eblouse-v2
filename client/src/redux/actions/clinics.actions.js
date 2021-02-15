@@ -31,9 +31,27 @@ const getSearchCategory = (query = null) => async (dispatch) => {
   }
 };
 
+const createNewReview = (clinicId, userId, reviewText, rating) => async (
+  dispatch
+) => {
+  dispatch({ type: types.CREATE_REVIEW_REQUEST, payload: null });
+  try {
+    const res = await api.post(`/review/clinic/${clinicId}`, {
+      userId: userId,
+      content: reviewText,
+      rating: rating,
+    });
+    dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res.data.data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: error });
+  }
+};
+
 const clinicsActions = {
   getClinic,
   getSearchCategory,
+  createNewReview,
 };
 
 export default clinicsActions;

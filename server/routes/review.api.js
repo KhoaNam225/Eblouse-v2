@@ -13,10 +13,6 @@ const validators = require("../middlewares/validator");
 router.post(
   "/clinic/:id",
   // authMiddleware.loginRequired,
-  // validators.validate([
-  //   param("id").exists().isString().custom(validators.checkObjectId),
-  //   body("content", "Missing content").exists().notEmpty(),
-  // ]),
   reviewController.createNewReview
 );
 
