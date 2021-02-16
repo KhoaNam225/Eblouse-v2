@@ -17,6 +17,7 @@ import "../../style/AdminNavBar.css";
  */
 const AdminNavBar = () => {
   const user = useSelector((state) => state.auth.user); // Current user infor
+
   const isLoading = useSelector((state) => state.auth.loading);
 
   return (

@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     dispatch(specsActions.getAllSpecializations());
-  }, []);
+  }, [dispatch]);
 
   if (isAuthenticated === null)
     return <LoadingSpinner color="red" animation="border" />;
