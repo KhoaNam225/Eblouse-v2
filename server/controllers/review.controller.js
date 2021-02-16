@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: review.controller.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: This is the controller to handle review routes
+ */
 const {
   AppError,
   catchAsync,
@@ -7,11 +13,14 @@ const Clinic = require("../models/Clinic");
 const Review = require("../models/Review");
 const reviewController = {};
 
+/**
+ * Creat a new review for a clinic.
+ * This requires the clinic id to be included in the request params and (userId, content, rating) in the request body
+ */
 reviewController.createNewReview = catchAsync(async (req, res, next) => {
   const clinicId = req.params.id;
 
   const { userId, content, rating } = req.body;
-  console.log("chekc urser id", userId);
   const clinic = await Clinic.findById(clinicId);
 
   if (!clinic)
@@ -35,6 +44,10 @@ reviewController.createNewReview = catchAsync(async (req, res, next) => {
   );
 });
 
+/**
+ * Return all reviews of a clinic
+ * This requires a clinic id in the request params
+ */
 reviewController.getReviewsOfClinic = catchAsync(async (req, res, next) => {
   const clinicId = req.params.id;
   const page = parseInt(req.query.page) || 1;
@@ -52,6 +65,9 @@ reviewController.getReviewsOfClinic = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, { reviews, totalPages }, null, "");
 });
 
+/**
+ * Return all reviews of all clinics
+ */
 reviewController.getRandomReview = catchAsync(async (req, res, next) => {
   const reviews = await Review.find({})
     .populate("user", ["name", "avatarUrl"])
@@ -70,8 +86,10 @@ reviewController.getRandomReview = catchAsync(async (req, res, next) => {
   );
 });
 
+/**
+ * Given a review id, update its content
+ */
 reviewController.updateSingleReview = catchAsync(async (req, res, next) => {
-  const userId = req.userId;
   const reviewId = req.params.id;
   const { content } = req.body;
   const review = await Review.findOneAndUpdate(
@@ -90,8 +108,10 @@ reviewController.updateSingleReview = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, review, null, "update successful");
 });
 
+/**
+ * Given a review id, delete it
+ */
 reviewController.deleteSingleReview = catchAsync(async (req, res, next) => {
-  const userId = req.userId;
   const reviewId = req.params.id;
   const review = await Review.findOneAndDelete({
     _id: reviewId,
@@ -106,4 +126,5 @@ reviewController.deleteSingleReview = catchAsync(async (req, res, next) => {
     );
   return sendResponse(res, 200, true, null, null, "Delete successful");
 });
+
 module.exports = reviewController;

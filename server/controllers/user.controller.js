@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: user.controller.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: This is the controller to handle user routes
+ */
 const {
   AppError,
   catchAsync,
@@ -7,11 +13,12 @@ const User = require("../models/User");
 const Booking = require("../models/Booking");
 const bcrypt = require("bcryptjs");
 const Clinic = require("../models/Clinic");
-// const Conversation = require("../models/Conversation");
-// const emailHelper = require("../helpers/email.helper");
 
 const userController = {};
 
+/**
+ * Register a user given username, email, password, and avatar in the request body
+ */
 userController.register = catchAsync(async (req, res, next) => {
   let { name, email, password, avatarUrl } = req.body;
   let user = await User.findOne({ email });
@@ -48,17 +55,20 @@ userController.register = catchAsync(async (req, res, next) => {
   );
 });
 
+/**
+ * Given a user id, return its detail information
+ */
 userController.getCurrentUser = catchAsync(async (req, res, next) => {
   const userId = req.userId;
   let user = await User.findById(userId);
   let clinic = await Clinic.findById(userId);
 
-  console.log(user);
   if (!user && !clinic)
     return next(new AppError(400, "User not found", "Get Current User Error"));
 
   let returnedUser = user ? user.toJSON() : clinic.toJSON();
 
+  // Add another field to indicate whether the returned user is an admin of clinic or not
   if (user) returnedUser.isAdmin = false;
   else returnedUser.isAdmin = true;
 
@@ -67,10 +77,12 @@ userController.getCurrentUser = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, user, null, "Get current user sucessful");
 });
 
+/**
+ * Get all users in the database
+ */
 userController.getUsers = catchAsync(async (req, res, next) => {
   let { page, limit, sortBy, ...filter } = req.query;
 
-  const currentUserId = req.userId;
   page = parseInt(page) || 1;
   limit = parseInt(limit) || 10;
 
@@ -86,37 +98,9 @@ userController.getUsers = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, { users, totalPages }, null, "");
 });
 
-// userController.getConversationList = catchAsync(async (req, res, next) => {
-//   let { page, limit } = req.query;
-
-//   const currentUserId = req.userId;
-//   page = parseInt(page) || 1;
-//   limit = parseInt(limit) || 10;
-
-//   const totalNumConversation = await Conversation.find({
-//     users: currentUserId,
-//   }).countDocuments();
-//   const totalPages = Math.ceil(totalNumConversation / limit);
-//   const offset = limit * (page - 1);
-
-//   let conversations = await Conversation.find({
-//     users: currentUserId,
-//   })
-//     .sort({ updatedAt: -1 })
-//     .skip(offset)
-//     .limit(limit)
-//     .populate("users");
-
-//   return sendResponse(
-//     res,
-//     200,
-//     true,
-//     { conversations, totalPages },
-//     null,
-//     null
-//   );
-// });
-
+/**
+ * Create a new booking for a user with a given clinic
+ */
 userController.createNewBooking = catchAsync(async (req, res, next) => {
   const userID = req.userId;
   const toClinicId = req.params.id;

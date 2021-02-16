@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: User.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: User schema for the app
+ */
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const jwt = require("jsonwebtoken");

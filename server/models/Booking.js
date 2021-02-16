@@ -1,6 +1,12 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: Booking.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Booking schema for the app
+ */
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Clinic = require("./Clinic");
 
 const bookingSchema = Schema(
   {
@@ -19,16 +25,6 @@ const bookingSchema = Schema(
     timestamps: true,
   }
 );
-// bookingSchema.statics.calculateBookings = async function (clinicId) {
-//   const bookingCount = await this.find({ clinic: clinicId }).countDocuments();
-//   await Clinic.findByIdAndUpdate(clinicId, { bookingCount: bookingCount });
-// };
-// bookingSchema.post("save", async function () {
-//   await this.constructors.calculateBookings(this.clinic);
-// });
-// bookingSchema.pre(/^findOneAnd/, async function (next) {
-//   await this.doc.constructor.calculateBookings(this.doc.clinic);
-// });
 
 const Booking = mongoose.model("Booking", bookingSchema);
 module.exports = Booking;

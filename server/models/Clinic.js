@@ -1,3 +1,10 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: Clinic.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Clinic schema for the app
+ */
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const jwt = require("jsonwebtoken");
@@ -29,6 +36,9 @@ const clinicSchema = Schema({
   longitude: { type: String, required: true },
 });
 
+/**
+ * Generate an access token for a clinic
+ */
 clinicSchema.methods.generateToken = async function () {
   const accessToken = await jwt.sign({ _id: this._id }, JWT_SECRET_KEY, {
     expiresIn: "1d",

@@ -1,24 +1,25 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: review.api.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Routes for operations ralated to review
+ */
 const express = require("express");
-const { route } = require("./auth.api");
-const { body, param } = require("express-validator");
+const { param } = require("express-validator");
 const router = express.Router();
 const reviewController = require("../controllers/review.controller");
 const validators = require("../middlewares/validator");
 
 /**
  * @route POST api/reviews/clinics/:id
- * @description Create a new review for a blog
+ * @description Create a new review for a clinic
  * @access Login required
  */
-router.post(
-  "/clinic/:id",
-  // authMiddleware.loginRequired,
-  reviewController.createNewReview
-);
+router.post("/clinic/:id", reviewController.createNewReview);
 
 /**
  * @route GET api/reviews/clinic/:id?page=1&limit=10
- * @description Get reviews of a blog with pagination
+ * @description Get reviews of a clinic
  * @access Public
  */
 router.get(
@@ -30,8 +31,8 @@ router.get(
 );
 
 /**
- * @route GET api/reviews/clinic/:id?page=1&limit=10
- * @description Get reviews of a blog with pagination
+ * @route GET api/reviews?page=1&limit=10
+ * @description Get all reviews in the database with pagination
  * @access Public
  */
 router.get("/", reviewController.getRandomReview);
@@ -41,27 +42,13 @@ router.get("/", reviewController.getRandomReview);
  * @description Update a review
  * @access Login required
  */
-router.put(
-  "/:id",
-  // authMiddleware.loginRequired,
-  // validators.validate([
-  //   param("id").exists().isString().custom(validators.checkObjectId),
-  //   body("content", "Missing content").exists().notEmpty(),
-  // ]),
-  reviewController.updateSingleReview
-);
+router.put("/:id", reviewController.updateSingleReview);
+
 /**
  * @route DELETE api/reviews/:id
  * @description Delete a review
  * @access Login required
  */
-router.delete(
-  "/:id",
-  // authMiddleware.loginRequired,
-  // validators.validate([
-  //   param("id").exists().isString().custom(validators.checkObjectId),
-  // ]),
-  reviewController.deleteSingleReview
-);
+router.delete("/:id", reviewController.deleteSingleReview);
 
 module.exports = router;

@@ -1,18 +1,27 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: clinic.api.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Routes for operations ralated to clinic
+ */
 const express = require("express");
-const { route } = require("./auth.api");
-const { body, param } = require("express-validator");
+const { param } = require("express-validator");
 const router = express.Router();
 const clinicController = require("../controllers/clinic.controller");
 const validators = require("../middlewares/validator");
 
 /**
- * @route GET api/clinic?q=:category
+ * @route GET api/clinic/search?query=:category
  * @description Get clinics with query
  * @access Public
  */
-
 router.get("/search", clinicController.getSearchCategory);
 
+/**
+ * @route GET api/clinic/specs
+ * @description Get all available specializations
+ * @access Public
+ */
 router.get("/specs", clinicController.getAllSpecializations);
 
 /**
@@ -20,7 +29,6 @@ router.get("/specs", clinicController.getAllSpecializations);
  * @description Get single clinic
  * @access Public
  */
-
 router.get(
   "/:id",
   validators.validate([param("id").exists().custom(validators.checkObjectId)]),
@@ -32,7 +40,6 @@ router.get(
  * @description Get clinics with limit, page and query
  * @access Public
  */
-
 router.get("/", clinicController.getListOfClinic);
 
 module.exports = router;

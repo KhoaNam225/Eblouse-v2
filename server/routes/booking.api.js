@@ -1,6 +1,11 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: booking.api.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Routes for operations related to booking.
+ */
 const express = require("express");
-const { route } = require("./booking.api");
-const { body, param } = require("express-validator");
+const { param } = require("express-validator");
 const router = express.Router();
 const clinicController = require("../controllers/clinic.controller");
 const validators = require("../middlewares/validator");
@@ -9,87 +14,46 @@ const authMiddleware = require("../middlewares/authentication");
 
 /**
  * @route GET api/booking/:id
- * @description Get single booking
- * @access Login required
- */
-
-// router.get(
-//   "/:id",
-//   validators.validate([param("id").exists().custom(validators.checkObjectId)]),
-//   clinicController.getSingleBooking
-// );
-
-/**
- * @route GET api/booking?page=1&limit=10
- * @description Get bookings with limit, page
- * @access Login required
+ * @description Get all bookings of a clinic given its id
+ * @access Public
  */
 
 router.get("/:id", clinicController.getBookingListUser);
 
 /**
- * @route POST api/booking/:id
- * @description Create a new booking for a booking
- * @access Login required
- */
-// router.post(
-//   "/booking/:id",
-//   // authMiddleware.loginRequired,
-//   validators.validate([
-//     param("id").exists().isString().custom(validators.checkObjectId),
-//     body("content", "Missing content").exists().notEmpty(),
-//   ]),
-//   clinicController.createNewBooking
-// );
-
-/**
- * @route POST api/booking/add/:id
- * @description Send a booking request to a clinic
- * @access Login required
- */
-// router.post(
-//   "/add/:id",
-//   authMiddleware.loginRequired,
-//   validators.validate([
-//     param("id").exists().isString().custom(validators.checkObjectId),
-//   ]),
-//   userController.sendBookingRequest
-// );
-
-/**
  * @route PUT api/booking/:id
- * @description Update a booking, user can cancel this booking
+ * @description Accept a pending booking request given the id of the current clinic
  * @access Login required
  */
 router.put(
   "/:id",
-  // authMiddleware.loginRequired,
   validators.validate([
     param("id").exists().isString().custom(validators.checkObjectId),
   ]),
   clinicController.acceptBookingRequest
 );
+
 /**
- * @route PUT api/booking/:id
- * @description Update a booking, user can cancel this booking
+ * @route PUT api/booking/manage/:id
+ * @description Cancel a booking
  * @access Login required
  */
 router.post(
   "/manage/:id",
-  // authMiddleware.loginRequired,
   validators.validate([
     param("id").exists().isString().custom(validators.checkObjectId),
   ]),
   clinicController.cancelBookingRequest
 );
 
+/**
+ * @route POST api/booking/:id
+ * @description Create a new booking given an id of the current clinic
+ * @access Login required
+ */
 router.post(
   "/:id",
   authMiddleware.loginRequired,
-  // validators.validate([
-  //   param("id").exists().isString().custom(validators.checkObjectId),
-  //   body("content", "Missing content").exists().notEmpty(),
-  // ]),
   userController.createNewBooking
 );
 

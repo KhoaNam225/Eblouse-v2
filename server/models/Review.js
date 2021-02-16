@@ -1,3 +1,10 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: Review.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Review schema for the app
+ */
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Clinic = require("./Clinic");
@@ -8,16 +15,16 @@ const reviewSchema = Schema(
     clinic: { type: Schema.Types.ObjectId, required: true, ref: "Clinic" },
     content: { type: String, required: true },
     rating: { type: Number, enum: [1, 2, 3, 4, 5] },
-
-    // reviewCount: { type: Number },
   },
   { timestamp: true }
 );
+
 // This function below is calculating the REVIEWS that CLINIC had.
 reviewSchema.statics.calculateReviews = async function (clinicId) {
   const reviewCount = await this.find({ clinic: clinicId }).countDocuments();
   await Clinic.findByIdAndUpdate(clinicId, { reviewCount: reviewCount });
 };
+
 //  this function below is calculating the RATING of REVIEWS
 reviewSchema.statics.calculateAvgRating = async function (clinicId) {
   const stats = await this.aggregate([
@@ -29,9 +36,6 @@ reviewSchema.statics.calculateAvgRating = async function (clinicId) {
       },
     },
   ]);
-  console.log("-".repeat(20));
-  console.log(stats);
-  console.log("-".repeat(20));
 
   await Clinic.findByIdAndUpdate(clinicId, { avgRating: stats[0].avgRating });
 };
@@ -50,7 +54,6 @@ reviewSchema.pre(/^findOneAnd/, async function (next) {
 
 reviewSchema.post(/^findOneAnd/, async function (next) {
   if (this.doc) await this.doc.constructor.calculateReviews(this.doc.clinic);
-  // await this.constructor.calculateAvgRating(this.clinic);
 });
 
 const Review = mongoose.model("Review", reviewSchema);

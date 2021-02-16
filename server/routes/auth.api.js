@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: auth.api.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Routes for authorization including login with email/facebook/google
+ */
 const express = require("express");
 const passport = require("passport");
 const authController = require("../controllers/auth.controller");

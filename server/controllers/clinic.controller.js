@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * Last Date Modified: 16 Feb 2021
+ * File name: clinic.controller.js
+ * Purpose: Controller to handle clinic routes
+ */
 const {
   AppError,
   catchAsync,
@@ -7,12 +13,13 @@ const Clinic = require("../models/Clinic");
 const Review = require("../models/Review");
 const Specialization = require("../models/Specialization");
 const Booking = require("../models/Booking");
-const userController = require("./user.controller");
-const User = require("../models/User");
-const { findById } = require("../models/Clinic");
 
 const clinicController = {};
 
+/**
+ * Given a specialization in the request query, return an array of clinics
+ * that have that specialization
+ */
 clinicController.getSearchCategory = catchAsync(async (req, res, next) => {
   let { specialization } = { ...req.query };
   specialization = decodeURIComponent(specialization);
@@ -31,7 +38,9 @@ clinicController.getSearchCategory = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, clinics, null, "");
 });
 
-//  user can get detail of clinic
+/**
+ * Given a clinic id, return the details of that clinic
+ */
 clinicController.getSingleClinic = catchAsync(async (req, res, next) => {
   let clinic = await Clinic.findById(req.params.id)
     .populate({
@@ -49,7 +58,6 @@ clinicController.getSingleClinic = catchAsync(async (req, res, next) => {
       new AppError(404, "clinic not found", " Get single clinic Error")
     );
   clinic.reviews = await Review.find({ clinic: clinic._id }).populate("user");
-  // console.log("hihihihih", clinic);
   return sendResponse(
     res,
     200,
@@ -60,7 +68,9 @@ clinicController.getSingleClinic = catchAsync(async (req, res, next) => {
   );
 });
 
-// user can see the clinic list
+/**
+ * Return a list of clinics
+ */
 clinicController.getListOfClinic = catchAsync(async (req, res, next) => {
   let { page, limit, sortBy, ...filter } = { ...req.query };
   page = parseInt(page) || 1;
@@ -85,7 +95,9 @@ clinicController.getListOfClinic = catchAsync(async (req, res, next) => {
   );
 });
 
-//  Clinic can see the booking request
+/**
+ * Accept a pending booking (only apply to admin users)
+ */
 clinicController.acceptBookingRequest = catchAsync(async (req, res, next) => {
   const bookingId = req.params.id; //From
   console.log(bookingId);
@@ -107,6 +119,9 @@ clinicController.acceptBookingRequest = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, null, null, "Booking has been accepted");
 });
 
+/**
+ * Cancel a pending or active booking (only apply to admin users)
+ */
 clinicController.cancelBookingRequest = catchAsync(async (req, res, next) => {
   const bookingId = req.params.id; //From
   let bookingRelate = await Booking.findOne({
@@ -127,7 +142,9 @@ clinicController.cancelBookingRequest = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, null, null, "Booking has been cancelled");
 });
 
-//  Clinic can see the list of booking
+/**
+ * Return all bookings related to a clinic
+ */
 clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
   let { page, limit, sortBy, ...filter } = { ...req.query };
   const currentUser = req.params.id;
@@ -141,6 +158,9 @@ clinicController.getBookingListUser = catchAsync(async (req, res, next) => {
   return sendResponse(res, 200, true, bookingRelate, null, null);
 });
 
+/**
+ * Return all specializations available across all clinics
+ */
 clinicController.getAllSpecializations = catchAsync(async (req, res, next) => {
   let specializations = await Specialization.find({});
   return sendResponse(
