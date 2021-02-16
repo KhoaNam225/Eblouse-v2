@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: auth.controller.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: This is the controller to handle authorization including login with email/google/facebook
+ */
 const {
   AppError,
   catchAsync,
@@ -9,19 +15,30 @@ const bcrypt = require("bcryptjs");
 
 const authController = {};
 
+/**
+ * Login with email, this require the email and password to be included in the
+ * request body.
+ *
+ */
 authController.loginWithEmail = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+  // Find a user or clinic with the corresponding email
+  // If not found then we have an invalid credential
   let user = await User.findOne({ email }, "+password");
   let clinic = await Clinic.findOne({ email }, "+password");
   if (!user && !clinic)
     return next(new AppError(400, "Invalid credentials", "Login error"));
 
+  // If there is a user or clinic with the given email
+  // Check if the password saved in the database match with the given password
+  // If not, we have an invalid credential
   let isMatch = false;
   if (user) isMatch = await bcrypt.compare(password, user.password);
   else isMatch = password === clinic.password;
 
   if (!isMatch) return next(new AppError(400, "Wrong password", "Login error"));
 
+  // Generate an access token and send the result back to client
   if (user) {
     const accessToken = await user.generateToken();
     user = user.toJSON();
@@ -51,6 +68,9 @@ authController.loginWithEmail = catchAsync(async (req, res, next) => {
   }
 });
 
+/**
+ * Login with Facebook or Google
+ */
 authController.loginWithFaceBookOrGoogle = catchAsync(
   async (req, res, next) => {
     // allow user to login or create a new account

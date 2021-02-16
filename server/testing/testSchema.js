@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: testSchema.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Code to generate fake data for DB
+ */
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const Doctor = require("../models/Doctor");
@@ -404,11 +410,6 @@ const main = async (genData = false) => {
   console.log(`Booking: ${booking.length} bookings`);
 
   console.log("Done!");
-  // booking = await Booking.find({})
-  //   .populate("doctor")
-  //   .populate("clinic")
-  //   .populate("user");
-  // console.log(JSON.stringify(booking, null, 2));
 };
 
 // main(true);

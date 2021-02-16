@@ -1,3 +1,10 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: Doctor.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Doctor schema for the app
+ */
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 

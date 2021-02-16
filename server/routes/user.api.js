@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: user.api.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Routes for operations ralated to user
+ */
 const express = require("express");
 const userController = require("../controllers/user.controller");
 const authentication = require("../middlewares/authentication");
