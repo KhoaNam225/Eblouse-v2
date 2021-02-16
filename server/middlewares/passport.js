@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: passport.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Middlewares to handle log in with google/facebook
+ */
 const passport = require("passport");
 const GoogleTokenStrategy = require("passport-google-token").Strategy;
 const FacebookTokenStrategy = require("passport-facebook-token");
