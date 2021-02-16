@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: validator.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Middlewares to perform a chain of validation operations and get the result back
+ */
 const utilsHelper = require("../helpers/utils.helper");
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");

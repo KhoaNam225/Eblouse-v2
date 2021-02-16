@@ -1,3 +1,9 @@
+/**
+ * Author: Vo Trinh Boi Quyen
+ * File name: authetication.js
+ * Last Date Modified: 16 Feb 2021
+ * Purpose: Middleware to check if the user is logged in or not
+ */
 const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const { AppError } = require("../helpers/utils.helper");
@@ -19,7 +25,6 @@ authMiddleware.loginRequired = (req, res, next) => {
           );
         }
       }
-      // console.log(payload);
       req.userId = payload._id;
     });
     next();
